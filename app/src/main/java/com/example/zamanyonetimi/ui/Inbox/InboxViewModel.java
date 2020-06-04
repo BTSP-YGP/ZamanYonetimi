@@ -1,16 +1,16 @@
-package com.example.zamanyonetimi.ui.dashboard;
+package com.example.zamanyonetimi.ui.Inbox;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class DashboardViewModel extends ViewModel {
+public class InboxViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public DashboardViewModel() {
+    public InboxViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is dashboard fragment");
+        mText.setValue("Acil-Önemli   Acil Değil-Önemli\nAcil-Önemsiz    Acil Değil-Önemsiz  ");
     }
 
     public LiveData<String> getText() {

@@ -1,16 +1,16 @@
-package com.example.zamanyonetimi.ui.home;
+package com.example.zamanyonetimi.ui.Matrix;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class HomeViewModel extends ViewModel {
+public class MatrixViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public HomeViewModel() {
+    public MatrixViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+        mText.setValue("Acil-Önemli   Acil Değil-Önemli\nAcil-Önemsiz    Acil Değil-Önemsiz");
     }
 
     public LiveData<String> getText() {

@@ -3,4 +3,18 @@
     <string name="title_home">Matrix</string>
     <string name="title_dashboard">Inbox</string>
     <string name="title_notifications">Notifications</string>
+
+    <string-array name="gorevler">
+        <item>Alisveris Yap</item>
+        <item>Odev Yap</item>
+        <item>Hocayla gorus</item>
+        <item>Proje Hazirla</item>
+
+    </string-array>
+    <string-array name="description">
+        <item>Ekmek ve su al</item>
+        <item>Matematikte hipotenusleri bul</item>
+        <item>Sinav tarihini sor</item>
+        <item>Proje fizibilitesini yap</item>
+    </string-array>
 </resources>
