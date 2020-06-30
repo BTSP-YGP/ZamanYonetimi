@@ -52,6 +52,7 @@ public class MatrixFragment extends Fragment {
                 recyclerView5.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
                         Intent intent = new Intent(getContext(), InboxFragment.class);
                         startActivity(intent);
                     }
@@ -59,6 +60,7 @@ public class MatrixFragment extends Fragment {
                 recyclerView6.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
                         Intent intent = new Intent(getContext(), InboxFragment.class);
                         startActivity(intent);
                     }
