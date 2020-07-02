@@ -3,6 +3,9 @@ package com.example.zamanyonetimi.ui.Inbox;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +63,8 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.InboxViewHol
         holder.gorevdescription_txt.setText(data2.get(position).toString());
         if (data3.get(position) == "tamam" ) {
             holder.gorev_image.setImageResource(R.drawable.ic_check_black_24dp);
+            holder.gorevismi_txt.setTextColor(Color.GRAY);
+            holder.gorevismi_txt.setTypeface(null, Typeface.ITALIC);
         } else if (data3.get(position) == "RED" ) {
             holder.gorev_image.setColorFilter(Color.RED);
         } else if (data3.get(position) == "YELLOW" ) {

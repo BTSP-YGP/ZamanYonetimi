@@ -14,11 +14,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.zamanyonetimi.ui.Inbox.InboxAdapter;
-import com.example.zamanyonetimi.ui.Inbox.InboxFragment;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.internal.NavigationMenu;
-import com.google.android.material.internal.NavigationMenuView;
+
 
 import java.text.DateFormat;
 import java.util.Calendar;

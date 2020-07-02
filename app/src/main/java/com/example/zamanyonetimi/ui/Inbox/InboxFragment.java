@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -38,6 +39,7 @@ public class InboxFragment extends Fragment {
     FloatingActionButton fabMenu, fabDuzenle, fabSil, fabTamamla, fabDelege, fabEkle;
     Boolean isFABOpen=false;
     FragmentManager fragman = getFragmentManager();
+    RecyclerView recyclerViewer;
     private ArrayList<CardView> mJobList;
     private InboxViewModel inboxViewModel;
     private InboxAdapter mAdapter;
@@ -50,7 +52,6 @@ public class InboxFragment extends Fragment {
                 ViewModelProviders.of(this).get(InboxViewModel.class);
         View root = inflater.inflate(R.layout.fragment_inbox, container, false);
         final RecyclerView recyclerViewer = root.findViewById(R.id.recyclerView);
-
 
         mAdapter = new InboxAdapter(container.getContext(), jobList, descriptionList, flagList);
         recyclerViewer.setAdapter(mAdapter);
@@ -69,7 +70,6 @@ public class InboxFragment extends Fragment {
         fabSil = (FloatingActionButton) root.findViewById(R.id.fab_sil);
         fabDelege = (FloatingActionButton) root.findViewById(R.id.fab_delege);
         fabTamamla = (FloatingActionButton) root.findViewById(R.id.fab_tamamla);
-
         fabEkle.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View v) {
@@ -80,7 +80,10 @@ public class InboxFragment extends Fragment {
                        }
                    });
                    Intent startIntent = new Intent(container.getContext(), EditJob.class);
+
                    startActivity(startIntent);
+
+
                }
 
         });
@@ -108,23 +111,14 @@ public class InboxFragment extends Fragment {
 
                 builder.setPositiveButton("Sil", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                    if (myDb.deleteJob(jobList.get(selectedPosition).toString())) {
-                        mAdapter.notifyItemRemoved(selectedPosition);
-                        jobList.remove(selectedPosition);
-                        descriptionList.remove(selectedPosition);
-                        flagList.remove(selectedPosition);
-                        Toast.makeText(getContext(), "Görev Silindi", Toast.LENGTH_LONG).show();
+                        if (myDb.deleteJob(jobList.get(selectedPosition).toString())) {
+                            mAdapter.notifyItemRemoved(selectedPosition);
+                            //jobList.remove(selectedPosition);
+                            //descriptionList.remove(selectedPosition);
+                            //flagList.remove(selectedPosition);
+                            Toast.makeText(getContext(), "Görev Silindi", Toast.LENGTH_LONG).show();
 
-                    }
-
-
-                   //getFragmentManager().beginTransaction().replace(this, this).commit();
-
-
-
-                    //recyclerViewer.removeAllViewsInLayout();
-                    //recyclerViewer.swapAdapter(mAdapter, true);
-                    //mAdapter.notifyDataSetChanged();
+                        }
 
                     }
                 });
@@ -141,7 +135,8 @@ public class InboxFragment extends Fragment {
         fabTamamla.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myDb.tamamlaJob(selectedPosition);
+                myDb.tamamlaJob(jobList.get(selectedPosition).toString());
+
             }
 
         });
@@ -157,6 +152,7 @@ public class InboxFragment extends Fragment {
         ViewAll();
         return root;
     }
+
     public void fetchData () {
         myDb = new DatabaseHelper(getContext());
         SQLiteDatabase db = myDb.getWritableDatabase();
@@ -236,5 +232,4 @@ public class InboxFragment extends Fragment {
         builder.setMessage(message);
         builder.show();
     }
-
 }
