@@ -80,7 +80,7 @@ public class InboxFragment extends Fragment {
                        }
                    });
                    Intent startIntent = new Intent(container.getContext(), EditJob.class);
-
+                   startIntent.putExtra("editJobName", "xeklex");
                    startActivity(startIntent);
 
 
@@ -98,6 +98,7 @@ public class InboxFragment extends Fragment {
                     }
                 });
                 Intent startIntent = new Intent(container.getContext(), EditJob.class);
+                startIntent.putExtra("editJobName", jobList.get(selectedPosition).toString());
                 startActivity(startIntent);
             }
 

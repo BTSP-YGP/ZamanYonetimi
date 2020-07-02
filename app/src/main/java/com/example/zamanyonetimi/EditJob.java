@@ -5,6 +5,8 @@ import androidx.fragment.app.DialogFragment;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -31,9 +33,14 @@ public class EditJob extends AppCompatActivity implements DatePickerDialog.OnDat
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle b = getIntent().getExtras();
+        String editJobName = b.getString("editJobName");
+        Integer jobId;
         setContentView(R.layout.activity_edit_job);
 
         myDb = new DatabaseHelper(this);
+        SQLiteDatabase db = myDb.getWritableDatabase();
+
 
         editName = (EditText)findViewById(R.id.editTextName);
         editDescription = (EditText)findViewById(R.id.editTextDescription);
@@ -45,6 +52,33 @@ public class EditJob extends AppCompatActivity implements DatePickerDialog.OnDat
         chkOnemli = (CheckBox) findViewById(R.id.checkBoxOnemli);
         chkAcil = (CheckBox) findViewById(R.id.checkBoxAcil);
         duzenleBtn = (FloatingActionButton)findViewById(R.id.duzenletusu);
+
+        if (editJobName != "xeklex") {
+            Cursor res = db.rawQuery("select * from jobs", null);
+            //res.getString(res.getColumnIndex("name"));
+            while (res.moveToNext()) {
+                jobId = res.getInt(res.getColumnIndex("jobid"));
+                if (res.getString(res.getColumnIndex("name")) != "") {
+                    editName.setText(res.getString(res.getColumnIndex("name")));
+                }
+                if (res.getString(res.getColumnIndex("description")) != "") {
+                    editDescription.setText(res.getString(res.getColumnIndex("description")));
+                }
+                if (res.getString(res.getColumnIndex("baslangic")) != "") {
+                    editBaslangic.setText(res.getString(res.getColumnIndex("baslangic")));
+                }
+                if (res.getString(res.getColumnIndex("bitis")) != "") {
+                    editBitis.setText(res.getString(res.getColumnIndex("bitis")));
+                }
+                if (res.getString(res.getColumnIndex("important")) == "1") {
+                    chkOnemli.setChecked(true);
+                }
+                if (res.getString(res.getColumnIndex("urgent")) == "1") {
+                    chkAcil.setChecked(true);
+                }
+            }
+            res.close();
+        }
 
         editBaslangic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,7 +152,7 @@ public class EditJob extends AppCompatActivity implements DatePickerDialog.OnDat
                                 chkAcil.isChecked());
                         if (databaseIslendi) {
                             Toast.makeText(getApplicationContext(), "Görev İşlendi", Toast.LENGTH_LONG).show();
-                            finish();
+                            finishAndRemoveTask();
                         } else {
                              Toast.makeText(getApplicationContext(), "Görev İşlenemedi", Toast.LENGTH_LONG).show();
                         }
@@ -142,4 +176,22 @@ public class EditJob extends AppCompatActivity implements DatePickerDialog.OnDat
 
     }
 
- }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        clear();
+
+    }
+
+    public void clear() {
+        editName.setText("");
+        editDescription.setText("");
+        editBaslangic.setText("");
+        editBitis.setText("");
+        editRemindDate.setText("");
+        editRemindTime.setText("");
+        chkHatirlatici.setChecked(false);
+        chkOnemli.setChecked(false);
+        chkAcil.setChecked(false);
+    }
+}
