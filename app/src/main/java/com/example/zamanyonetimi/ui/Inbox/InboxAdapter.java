@@ -1,5 +1,6 @@
 package com.example.zamanyonetimi.ui.Inbox;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -23,9 +24,10 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.InboxViewHol
     private LayoutInflater inflater;
     private OnItemClickListener mlistener;
     //private InboxViewHolder.ItemClickListener mClickListener;
-    CardView cardView;
+    CardView cardView, cardOld;
     List data1, data2, data3;
     Context context;
+    View oldView;
 
     public InboxAdapter(Context ct, List s1, List s2, List s3) {
         context = ct;
@@ -79,7 +81,7 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.InboxViewHol
         TextView gorevismi_txt, gorevdescription_txt;
         ImageView gorev_image;
 
-        public InboxViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
+        public InboxViewHolder(@NonNull final View itemView, final OnItemClickListener listener) {
             super(itemView);
             gorevismi_txt = itemView.findViewById(R.id.gorevismi_txt);
             gorevdescription_txt = itemView.findViewById(R.id.gorevdescription_txt);
@@ -88,16 +90,27 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.InboxViewHol
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (oldView == null) {
+                        oldView = v;
+                    } else {
+                        cardOld = oldView.findViewById(R.id.cardJob);
+                        cardOld.setCardBackgroundColor(Color.WHITE);
+                        oldView = v;
+                    }
+
+
                     if (listener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
                             listener.onItemClick(position);
                         }
+
                         cardView = v.findViewById(R.id.cardJob);
                         if (cardView.getCardBackgroundColor().getDefaultColor() == Color.BLUE) {
                             cardView.setCardBackgroundColor(Color.WHITE);
                         }
                         else {
+
                             cardView.setCardBackgroundColor(Color.BLUE);
                         }
                     }

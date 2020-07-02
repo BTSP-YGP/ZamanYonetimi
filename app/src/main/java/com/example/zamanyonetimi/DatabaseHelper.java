@@ -60,9 +60,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return sonuc != -1;
     }
 
-    public boolean deleteJob (Integer job_id) {
+    public boolean deleteJob (String jobName) {
         SQLiteDatabase db = this.getWritableDatabase();
-        long sonuc = db.delete("jobs", "jobid ="+job_id, null);
+        long sonuc = db.delete("jobs", "name = \'"+ jobName+"\'", null);
         return sonuc != -1;
     }
 
@@ -76,4 +76,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("UPDATE jobs SET complete = 1 WHERE jobid = "+ job_id.toString(),null);
     }
+
+
 }

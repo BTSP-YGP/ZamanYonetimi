@@ -10,15 +10,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.zamanyonetimi.DatabaseHelper;
 import com.example.zamanyonetimi.EditJob;
+import com.example.zamanyonetimi.MainActivity;
 import com.example.zamanyonetimi.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -34,6 +37,7 @@ public class InboxFragment extends Fragment {
     List flagList = new ArrayList();
     FloatingActionButton fabMenu, fabDuzenle, fabSil, fabTamamla, fabDelege, fabEkle;
     Boolean isFABOpen=false;
+    FragmentManager fragman = getFragmentManager();
     private ArrayList<CardView> mJobList;
     private InboxViewModel inboxViewModel;
     private InboxAdapter mAdapter;
@@ -41,31 +45,7 @@ public class InboxFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              final ViewGroup container, Bundle savedInstanceState) {
 
-        myDb = new DatabaseHelper(container.getContext());
-        SQLiteDatabase db = myDb.getWritableDatabase();
-        Cursor res = db.rawQuery("select * from jobs", null);
-        while (res.moveToNext()) {
-            jobList.add(res.getString(res.getColumnIndex("name")));
-
-            descriptionList.add(res.getString(res.getColumnIndex("description")));
-            if (res.getInt(res.getColumnIndex("complete")) == 1) {
-                flagList.add("tamam");
-            }
-            if (res.getInt(res.getColumnIndex("important")) == 1 &&
-                    res.getInt(res.getColumnIndex("urgent")) == 1) {
-                flagList.add("RED");
-            } else if (res.getInt(res.getColumnIndex("important")) == 0 &&
-                    res.getInt(res.getColumnIndex("urgent")) == 1) {
-                flagList.add("YELLOW");
-            } else if (res.getInt(res.getColumnIndex("important")) == 1 &&
-                    res.getInt(res.getColumnIndex("urgent")) == 0) {
-                flagList.add("GREEN");
-            } else {
-                flagList.add("BLUE");
-            }
-
-        }
-        res.close();
+        fetchData();
         inboxViewModel =
                 ViewModelProviders.of(this).get(InboxViewModel.class);
         View root = inflater.inflate(R.layout.fragment_inbox, container, false);
@@ -80,12 +60,6 @@ public class InboxFragment extends Fragment {
             @Override
             public void onItemClick(int position) {
                 selectedPosition = position;
-                // AlertDialog kısmı silinecek
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setMessage(selectedPosition.toString()).setTitle("secilen");
-                AlertDialog dialog = builder.create();
-                dialog.show();
-                // AlertDialog son
             }
         });
 
@@ -134,23 +108,34 @@ public class InboxFragment extends Fragment {
 
                 builder.setPositiveButton("Sil", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        myDb.deleteJob(selectedPosition);
+                    if (myDb.deleteJob(jobList.get(selectedPosition).toString())) {
+                        mAdapter.notifyItemRemoved(selectedPosition);
+                        jobList.remove(selectedPosition);
+                        descriptionList.remove(selectedPosition);
+                        flagList.remove(selectedPosition);
+                        Toast.makeText(getContext(), "Görev Silindi", Toast.LENGTH_LONG).show();
+
+                    }
+
+
+                   //getFragmentManager().beginTransaction().replace(this, this).commit();
+
+
+
+                    //recyclerViewer.removeAllViewsInLayout();
+                    //recyclerViewer.swapAdapter(mAdapter, true);
+                    //mAdapter.notifyDataSetChanged();
 
                     }
                 });
-
                 builder.setNegativeButton("Vazgeç", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // User cancelled the dialog
+//
                     }
                 });
-
                 AlertDialog dialog = builder.create();
                 dialog.show();
-                refreshInbox();
-
             }
-
         });
 
         fabTamamla.setOnClickListener(new View.OnClickListener() {
@@ -172,6 +157,33 @@ public class InboxFragment extends Fragment {
         ViewAll();
         return root;
     }
+    public void fetchData () {
+        myDb = new DatabaseHelper(getContext());
+        SQLiteDatabase db = myDb.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from jobs", null);
+        while (res.moveToNext()) {
+            jobList.add(res.getString(res.getColumnIndex("name")));
+            descriptionList.add(res.getString(res.getColumnIndex("description")));
+            if (res.getInt(res.getColumnIndex("complete")) == 1) {
+                flagList.add("tamam");
+            }
+            if (res.getInt(res.getColumnIndex("important")) == 1 &&
+                    res.getInt(res.getColumnIndex("urgent")) == 1) {
+                flagList.add("RED");
+            } else if (res.getInt(res.getColumnIndex("important")) == 0 &&
+                    res.getInt(res.getColumnIndex("urgent")) == 1) {
+                flagList.add("YELLOW");
+            } else if (res.getInt(res.getColumnIndex("important")) == 1 &&
+                    res.getInt(res.getColumnIndex("urgent")) == 0) {
+                flagList.add("GREEN");
+            } else {
+                flagList.add("BLUE");
+            }
+
+        }
+        res.close();
+    }
+
     public void ViewAll () {
         fabMenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -207,7 +219,6 @@ public class InboxFragment extends Fragment {
         fabDelege.animate().translationY(-440);
         fabTamamla.animate().translationY(-580);
         fabEkle.animate().translationX(-150);
-
     }
 
     private void closeFABMenu(){
@@ -226,7 +237,4 @@ public class InboxFragment extends Fragment {
         builder.show();
     }
 
-    public void refreshInbox () {
-        getFragmentManager().beginTransaction().detach(this).attach(this).commit();
-    }
 }

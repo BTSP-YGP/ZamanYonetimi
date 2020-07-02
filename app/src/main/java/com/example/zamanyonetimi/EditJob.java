@@ -12,8 +12,13 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.example.zamanyonetimi.ui.Inbox.InboxAdapter;
+import com.example.zamanyonetimi.ui.Inbox.InboxFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.internal.NavigationMenu;
+import com.google.android.material.internal.NavigationMenuView;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -113,11 +118,12 @@ public class EditJob extends AppCompatActivity implements DatePickerDialog.OnDat
                                 editBitis.getText(),
                                 chkOnemli.isChecked(),
                                 chkAcil.isChecked());
-/*                    if (databaseIslendi)
-                        Toast.makeText(MainActivity.this, "Görev İşlendi", Toast.LENGTH_LONG).show();
-                    else
-                        Toast.makeText(MainActivity.this, "Görev İşlenemedi", Toast.LENGTH_LONG).show();
-*/
+                        if (databaseIslendi) {
+                            Toast.makeText(getApplicationContext(), "Görev İşlendi", Toast.LENGTH_LONG).show();
+                            finish();
+                        } else {
+                             Toast.makeText(getApplicationContext(), "Görev İşlenemedi", Toast.LENGTH_LONG).show();
+                        }
                     } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                         builder.setCancelable(true);
