@@ -70,6 +70,7 @@ public class InboxFragment extends Fragment {
         fabSil = (FloatingActionButton) root.findViewById(R.id.fab_sil);
         fabDelege = (FloatingActionButton) root.findViewById(R.id.fab_delege);
         fabTamamla = (FloatingActionButton) root.findViewById(R.id.fab_tamamla);
+
         fabEkle.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View v) {
@@ -84,6 +85,7 @@ public class InboxFragment extends Fragment {
                    startActivity(startIntent);
 
 
+
                }
 
         });
@@ -91,15 +93,19 @@ public class InboxFragment extends Fragment {
         fabDuzenle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAdapter.setOnItemClickListener(new InboxAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(int position) {
+                if (selectedPosition != null) {
+                    mAdapter.setOnItemClickListener(new InboxAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(int position) {
 //
-                    }
-                });
-                Intent startIntent = new Intent(container.getContext(), EditJob.class);
-                startIntent.putExtra("editJobName", jobList.get(selectedPosition).toString());
-                startActivity(startIntent);
+                        }
+                    });
+                    Intent startIntent = new Intent(container.getContext(), EditJob.class);
+                    startIntent.putExtra("editJobName", jobList.get(selectedPosition).toString());
+                    startActivity(startIntent);
+                } else {
+                    Toast.makeText(getContext(), "Bir görev seçiniz!", Toast.LENGTH_LONG).show();
+                }
             }
 
         });
@@ -109,23 +115,19 @@ public class InboxFragment extends Fragment {
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setMessage("Gorev silinsin mi?");
-
                 builder.setPositiveButton("Sil", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         if (myDb.deleteJob(jobList.get(selectedPosition).toString())) {
-                            mAdapter.notifyItemRemoved(selectedPosition);
-                            //jobList.remove(selectedPosition);
-                            //descriptionList.remove(selectedPosition);
-                            //flagList.remove(selectedPosition);
-                            Toast.makeText(getContext(), "Görev Silindi", Toast.LENGTH_LONG).show();
-
+                            jobList.remove(selectedPosition);
+                            descriptionList.remove(selectedPosition);
+                            flagList.remove(selectedPosition);
+                            mAdapter.remove(selectedPosition);
                         }
-
                     }
                 });
                 builder.setNegativeButton("Vazgeç", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-//
+                        //
                     }
                 });
                 AlertDialog dialog = builder.create();
@@ -136,7 +138,12 @@ public class InboxFragment extends Fragment {
         fabTamamla.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myDb.tamamlaJob(jobList.get(selectedPosition).toString());
+                if (flagList.get(selectedPosition).toString() == "tamam") {
+                    Toast.makeText(getContext(), "tamamlanmadı", Toast.LENGTH_LONG).show();
+                    myDb.tamamlaJob(jobList.get(selectedPosition).toString(), 0);
+                } else {
+                    myDb.tamamlaJob(jobList.get(selectedPosition).toString(), 1);
+                }
 
             }
 
@@ -163,20 +170,20 @@ public class InboxFragment extends Fragment {
             descriptionList.add(res.getString(res.getColumnIndex("description")));
             if (res.getInt(res.getColumnIndex("complete")) == 1) {
                 flagList.add("tamam");
-            }
-            if (res.getInt(res.getColumnIndex("important")) == 1 &&
-                    res.getInt(res.getColumnIndex("urgent")) == 1) {
-                flagList.add("RED");
-            } else if (res.getInt(res.getColumnIndex("important")) == 0 &&
-                    res.getInt(res.getColumnIndex("urgent")) == 1) {
-                flagList.add("YELLOW");
-            } else if (res.getInt(res.getColumnIndex("important")) == 1 &&
-                    res.getInt(res.getColumnIndex("urgent")) == 0) {
-                flagList.add("GREEN");
             } else {
-                flagList.add("BLUE");
+                if (res.getInt(res.getColumnIndex("important")) == 1 &&
+                        res.getInt(res.getColumnIndex("urgent")) == 1) {
+                    flagList.add("RED");
+                } else if (res.getInt(res.getColumnIndex("important")) == 0 &&
+                        res.getInt(res.getColumnIndex("urgent")) == 1) {
+                    flagList.add("YELLOW");
+                } else if (res.getInt(res.getColumnIndex("important")) == 1 &&
+                        res.getInt(res.getColumnIndex("urgent")) == 0) {
+                    flagList.add("GREEN");
+                } else {
+                    flagList.add("BLUE");
+                }
             }
-
         }
         res.close();
     }
@@ -226,11 +233,15 @@ public class InboxFragment extends Fragment {
         fabTamamla.animate().translationY(0);
         fabEkle.animate().translationX(0);
     }
-    public void showMessage (String title, String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setCancelable(true);
-        builder.setTitle(title);
-        builder.setMessage(message);
-        builder.show();
+
+    public void callInbox () {
+        InboxFragment inboxfragment = new InboxFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.nav_host_fragment_container, inboxfragment);
+        fragmentTransaction.commit();
+    };
+    public void update() {
+        mAdapter.updated();
     }
 }

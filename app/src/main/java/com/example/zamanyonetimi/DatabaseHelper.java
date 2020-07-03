@@ -72,11 +72,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return sonuc != -1;
     }
 
-    public void tamamlaJob (String jobName) {
+    public void tamamlaJob (String jobName, Integer durum) {
         SQLiteDatabase db = this.getWritableDatabase();
         //ContentValues cv = new ContentValues();
         //cv.put();
-        db.execSQL("UPDATE jobs SET complete = 1 WHERE name = \'"+ jobName+"\'");
+        db.execSQL("UPDATE jobs SET complete = "+ durum.toString() +" WHERE name = \'"+ jobName+"\'");
     }
 
 

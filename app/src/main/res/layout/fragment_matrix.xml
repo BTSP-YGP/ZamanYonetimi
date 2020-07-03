@@ -11,6 +11,7 @@
         android:layout_width="204dp"
         android:layout_height="364dp"
         android:background="#FF0000"
+        android:clickable="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -55,4 +56,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ListView
+        android:layout_width="324dp"
+        android:layout_height="129dp"
+        tools:layout_editor_absoluteX="51dp"
+        tools:layout_editor_absoluteY="206dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -77,10 +77,24 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.InboxViewHol
 
     }
 
+    public void remove(int position)
+    {
+        data1.remove(position);
+        data2.remove(position);
+        data3.remove(position);
+        this.notifyDataSetChanged();
+    }
+
+    public void updated ()
+    {
+        this.notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return data1.size();
     }
+
     public class InboxViewHolder extends RecyclerView.ViewHolder {
 
         TextView gorevismi_txt, gorevdescription_txt;

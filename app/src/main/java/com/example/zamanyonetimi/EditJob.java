@@ -17,6 +17,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
+import com.example.zamanyonetimi.ui.Inbox.InboxAdapter;
+import com.example.zamanyonetimi.ui.Inbox.InboxFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
@@ -54,8 +56,7 @@ public class EditJob extends AppCompatActivity implements DatePickerDialog.OnDat
         duzenleBtn = (FloatingActionButton)findViewById(R.id.duzenletusu);
 
         if (editJobName != "xeklex") {
-            Cursor res = db.rawQuery("select * from jobs", null);
-            //res.getString(res.getColumnIndex("name"));
+            Cursor res = db.rawQuery("select * from jobs where name = \'"+ editJobName+"\'", null);
             while (res.moveToNext()) {
                 jobId = res.getInt(res.getColumnIndex("jobid"));
                 if (res.getString(res.getColumnIndex("name")) != "") {
@@ -153,6 +154,8 @@ public class EditJob extends AppCompatActivity implements DatePickerDialog.OnDat
                         if (databaseIslendi) {
                             Toast.makeText(getApplicationContext(), "Görev İşlendi", Toast.LENGTH_LONG).show();
                             finishAndRemoveTask();
+                            InboxFragment frg = new InboxFragment();
+                            frg.update();
                         } else {
                              Toast.makeText(getApplicationContext(), "Görev İşlenemedi", Toast.LENGTH_LONG).show();
                         }
@@ -180,6 +183,7 @@ public class EditJob extends AppCompatActivity implements DatePickerDialog.OnDat
     public void onBackPressed() {
         super.onBackPressed();
         clear();
+        finish();
 
     }
 
