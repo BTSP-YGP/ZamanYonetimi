@@ -83,9 +83,6 @@ public class InboxFragment extends Fragment {
                    Intent startIntent = new Intent(container.getContext(), EditJob.class);
                    startIntent.putExtra("editJobName", "xeklex");
                    startActivity(startIntent);
-
-
-
                }
 
         });
@@ -139,10 +136,13 @@ public class InboxFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (flagList.get(selectedPosition).toString() == "tamam") {
-                    Toast.makeText(getContext(), "tamamlanmadı", Toast.LENGTH_LONG).show();
                     myDb.tamamlaJob(jobList.get(selectedPosition).toString(), 0);
+                    flagList.set(selectedPosition, "");
+                    mAdapter.tamamUpdate(selectedPosition, "");
                 } else {
                     myDb.tamamlaJob(jobList.get(selectedPosition).toString(), 1);
+                    flagList.set(selectedPosition, "tamam");
+                    mAdapter.tamamUpdate(selectedPosition, "tamam");
                 }
 
             }
@@ -241,7 +241,5 @@ public class InboxFragment extends Fragment {
         fragmentTransaction.replace(R.id.nav_host_fragment_container, inboxfragment);
         fragmentTransaction.commit();
     };
-    public void update() {
-        mAdapter.updated();
-    }
+
 }

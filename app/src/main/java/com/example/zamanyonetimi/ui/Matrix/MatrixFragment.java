@@ -79,6 +79,6 @@ public class MatrixFragment extends Fragment {
 
         return root;
     }
-    
+
 }
 

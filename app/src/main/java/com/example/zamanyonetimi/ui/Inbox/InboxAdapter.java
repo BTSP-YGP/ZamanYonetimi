@@ -1,24 +1,17 @@
 package com.example.zamanyonetimi.ui.Inbox;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.zamanyonetimi.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +19,6 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.InboxViewHol
     private ArrayList<CardView> mJobList;
     private LayoutInflater inflater;
     private OnItemClickListener mlistener;
-    //private InboxViewHolder.ItemClickListener mClickListener;
     CardView cardView, cardOld;
     List data1, data2, data3;
     Context context;
@@ -47,13 +39,10 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.InboxViewHol
         mlistener = listener;
     }
 
-
-
     @NonNull
     @Override
     public InboxViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.inbox_item, parent, false);
-
         return new InboxViewHolder(view, (OnItemClickListener) mlistener);
     }
 
@@ -74,7 +63,6 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.InboxViewHol
         } else {
             holder.gorev_image.setColorFilter(Color.BLUE);
         }
-
     }
 
     public void remove(int position)
@@ -85,9 +73,20 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.InboxViewHol
         this.notifyDataSetChanged();
     }
 
-    public void updated ()
-    {
+    public void update(List s1, List s2, List s3) {
+       data1.clear();
+       data2.clear();
+       data3.clear();
+        data1 = s1;
+        data2 = s2;
+        data3 = s3;
         this.notifyDataSetChanged();
+    }
+
+    public void tamamUpdate (int position, String durum)
+    {
+        data3.set(position, durum);
+        this.notifyItemChanged(position);
     }
 
     @Override
@@ -116,20 +115,16 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.InboxViewHol
                         cardOld.setCardBackgroundColor(Color.WHITE);
                         oldView = v;
                     }
-
-
                     if (listener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
                             listener.onItemClick(position);
                         }
-
                         cardView = v.findViewById(R.id.cardJob);
                         if (cardView.getCardBackgroundColor().getDefaultColor() == Color.BLUE) {
                             cardView.setCardBackgroundColor(Color.WHITE);
                         }
                         else {
-
                             cardView.setCardBackgroundColor(Color.BLUE);
                         }
                     }
