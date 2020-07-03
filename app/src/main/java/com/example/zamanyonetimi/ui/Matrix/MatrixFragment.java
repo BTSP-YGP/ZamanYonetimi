@@ -34,44 +34,46 @@ public class MatrixFragment extends Fragment {
         recyclerView4 = root.findViewById(R.id.recyclerView4);
         recyclerView5 = root.findViewById(R.id.recyclerView5);
         recyclerView6 = root.findViewById(R.id.recyclerView6);
+
         homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
-                recyclerView2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(getContext(), InboxFragment.class);
-                        startActivity(intent);
-                    }
 
-                });
-                recyclerView4.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(getContext(), InboxFragment.class);
-                        startActivity(intent);
-                    }
-                });
-                recyclerView5.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        Intent intent = new Intent(getContext(), InboxFragment.class);
-                        startActivity(intent);
-                    }
-                });
-                recyclerView6.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        Intent intent = new Intent(getContext(), InboxFragment.class);
-                        startActivity(intent);
-                    }
-                });
             }
         });
+        recyclerView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), InboxFragment.class);
+                startActivity(intent);
+            }
 
+        });
+        recyclerView4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), InboxFragment.class);
+                startActivity(intent);
+            }
+        });
+        recyclerView5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getContext(), InboxFragment.class);
+                startActivity(intent);
+            }
+        });
+        recyclerView6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getContext(), InboxFragment.class);
+                startActivity(intent);
+            }
+        });
         return root;
-    }
+        }
+
 }
