@@ -16,13 +16,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.Adapter;
 
 import com.example.zamanyonetimi.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.InboxViewHolder> {
+public class InboxAdapter extends Adapter<InboxAdapter.InboxViewHolder> {
     private ArrayList<CardView> mJobList;
     private LayoutInflater inflater;
     private OnItemClickListener mlistener;
