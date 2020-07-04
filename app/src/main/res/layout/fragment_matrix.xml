@@ -21,11 +21,12 @@
         android:layout_width="204dp"
         android:layout_height="364dp"
         android:background="#FFFF00"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/recyclerView2"
-        app:layout_constraintTop_toTopOf="parent"
         android:clickable="true"
-        android:focusable="true"/>
+        android:focusable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toEndOf="@+id/recyclerView2"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
         android:id="@+id/recyclerView5"

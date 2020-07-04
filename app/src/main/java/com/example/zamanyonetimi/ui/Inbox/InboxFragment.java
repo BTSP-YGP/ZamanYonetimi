@@ -1,6 +1,7 @@
 package com.example.zamanyonetimi.ui.Inbox;
 
 import android.app.AlertDialog;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.zamanyonetimi.DatabaseHelper;
 import com.example.zamanyonetimi.EditJob;
+import com.example.zamanyonetimi.MailSending;
 import com.example.zamanyonetimi.MainActivity;
 import com.example.zamanyonetimi.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -29,7 +31,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InboxFragment extends Fragment {
+public class InboxFragment<getApplicationContext> extends Fragment {
 
     DatabaseHelper myDb;
     Integer selectedPosition;
@@ -149,12 +151,16 @@ public class InboxFragment extends Fragment {
 
         });
 
+
+
         fabDelege.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+            startActivity(intent);
 
             }
+
+            Intent intent = new Intent(container.getContext(), MailSending.class);
 
         });
 
