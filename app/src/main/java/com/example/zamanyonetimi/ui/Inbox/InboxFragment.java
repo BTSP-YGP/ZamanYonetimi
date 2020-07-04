@@ -154,7 +154,9 @@ public class InboxFragment<getApplicationContext> extends Fragment {
         fabDelege.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            startActivity(intent);
+                Intent startIntent = new Intent(container.getContext(), MailSending.class);
+                startIntent.putExtra("editJobName", jobList.get(selectedPosition).toString());
+                startActivity(startIntent);
 
             }
 

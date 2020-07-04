@@ -35,11 +35,10 @@ import static android.widget.Toast.LENGTH_SHORT;
 
 public class MatrixFragment extends Fragment {
     DatabaseHelper db;
-    View root;
-    ArrayList<String> listitemRed = new ArrayList<String>();
-    List listitemYellow = new ArrayList();
-    List listitemGreen = new ArrayList();
-    List listitemBlue = new ArrayList();
+    ArrayList<String> listitemRed = new ArrayList();
+    ArrayList<String> listitemYellow = new ArrayList();
+    ArrayList<String> listitemGreen = new ArrayList();
+    ArrayList<String> listitemBlue = new ArrayList();
 
     private MatrixViewModel matrixViewModel;
 
