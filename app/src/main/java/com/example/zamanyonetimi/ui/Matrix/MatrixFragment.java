@@ -100,8 +100,8 @@ public class MatrixFragment extends Fragment {
             while (cursor.moveToNext()){
                 ListItem.add(cursor.getString(2));
             } //while
-            adapter=new ArrayAdapter<>(getContext(),android.R.layout.simple_list_item_1,ListItem);
-            joblist.setAdapter(adapter);
+            //adapter=new ArrayAdapter<>(getContext(),android.R.layout.simple_list_item_1,ListItem);
+            //joblist.setAdapter(adapter);
         }//else
 
     }
