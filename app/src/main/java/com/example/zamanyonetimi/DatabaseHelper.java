@@ -2,14 +2,16 @@ package com.example.zamanyonetimi;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.text.Editable;
+
 import androidx.annotation.Nullable;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME= "zamanyonetimi.db";
-
+    public static final String JOBS_TABLE= "jobs";
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
@@ -40,6 +42,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("urgent", urgent);
         long sonuc = db.insert("jobs", null, contentValues);
         return sonuc != -1;
+
+    }
+    public Cursor ViewData(){
+        SQLiteDatabase db=this.getReadableDatabase();
+        String query="Select * from "+JOBS_TABLE;
+        Cursor cursor=db.rawQuery(query,null);
+        return cursor;
 
     }
     public boolean insertReminder (String jobName, String reminddate, String remindtime) {
