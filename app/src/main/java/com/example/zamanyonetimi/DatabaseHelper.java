@@ -18,7 +18,6 @@ import static android.provider.BaseColumns._ID;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME= "zamanyonetimi.db";
-    public static final String JOBS_TABLE= "jobs";
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -49,13 +48,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("urgent", urgent);
         long sonuc = db.insert("jobs", null, contentValues);
         return sonuc != -1;
-
-    }
-    public Cursor ViewData(){
-        SQLiteDatabase db=this.getReadableDatabase();
-        String query="Select * from "+JOBS_TABLE;
-        Cursor cursor=db.rawQuery(query,null);
-        return cursor;
 
     }
     public boolean insertReminder (Integer job_id, Date reminddate, Time remindtime) {
