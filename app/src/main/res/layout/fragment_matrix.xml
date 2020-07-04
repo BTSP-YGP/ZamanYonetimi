@@ -16,7 +16,9 @@
         app:layout_constraintBottom_toTopOf="@+id/text_yataySol"
         app:layout_constraintEnd_toStartOf="@+id/text_dikeyUst"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:longClickable="true"
+        android:focusableInTouchMode="true"/>
 
     <ListView
         android:id="@+id/listview_yellow"

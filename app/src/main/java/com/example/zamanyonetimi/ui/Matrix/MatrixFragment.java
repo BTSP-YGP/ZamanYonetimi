@@ -9,6 +9,7 @@ import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -52,21 +53,31 @@ public class MatrixFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_matrix, container, false);
         final ListView listviewRed = root.findViewById(R.id.listview_red);
         final ListView listviewYellow = root.findViewById(R.id.listview_yellow);
+        final ListView listviewBlue=root.findViewById(R.id.listview_blue);
+        final ListView listviewgreen=root.findViewById(R.id.listview_green);
 
         ViewData();
 
         // her liste için adapter oluşturuldu
-        ArrayAdapter<String> adapterRed = new ArrayAdapter<String>(container.getContext(), R.layout.matrix_item,  listitemRed);
+        ArrayAdapter<String> adapterRed = new ArrayAdapter<String>(container.getContext(), R.layout.matrix_item, listitemRed);
         listviewRed.setAdapter(adapterRed);
+        ArrayAdapter<String> adapterYellow = new ArrayAdapter<String>(container.getContext(), R.layout.matrix_item, listitemYellow);
+        listviewRed.setAdapter(adapterYellow);
+        ArrayAdapter<String> adapterBlue = new ArrayAdapter<String>(container.getContext(), R.layout.matrix_item, listitemBlue);
+        listviewRed.setAdapter(adapterBlue);
+        ArrayAdapter<String> adapterGreen = new ArrayAdapter<String>(container.getContext(), R.layout.matrix_item, listitemGreen);
+        listviewRed.setAdapter(adapterGreen);
+
+
 
         return root;
     }
 
-    public void ViewData () {
+    public void ViewData() {
         db = new DatabaseHelper(getContext());
         SQLiteDatabase dbSQL = db.getWritableDatabase();
         Cursor cursor = dbSQL.rawQuery("select * from jobs", null);
-        if(cursor.getCount()==0) {
+        if (cursor.getCount() == 0) {
             Toast.makeText(getContext(), "no data to show", LENGTH_SHORT).show();
         } else {
             while (cursor.moveToNext()) {
