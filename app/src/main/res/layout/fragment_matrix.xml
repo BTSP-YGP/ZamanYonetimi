@@ -6,34 +6,39 @@
     android:layout_height="match_parent"
     tools:context=".ui.Matrix.MatrixFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <ListView
         android:id="@+id/recyclerView2"
         android:layout_width="204dp"
         android:layout_height="364dp"
         android:background="#FF0000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:clickable="true"/>
+        android:clickable="true"
+        android:focusable="true" />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <ListView
         android:id="@+id/recyclerView6"
         android:layout_width="204dp"
         android:layout_height="364dp"
         android:background="#FFFF00"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/recyclerView2"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:clickable="true"
+        android:focusable="true"/>
 
-    <androidx.recyclerview.widget.RecyclerView
+    <ListView
         android:id="@+id/recyclerView5"
         android:layout_width="204dp"
         android:layout_height="364dp"
         android:background="#008000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView2" />
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView2"
+        android:clickable="true"
+        android:focusable="true"/>
 
-    <androidx.recyclerview.widget.RecyclerView
+    <ListView
         android:id="@+id/recyclerView4"
         android:layout_width="204dp"
         android:layout_height="364dp"
@@ -41,7 +46,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/recyclerView5"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView6" />
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView6"
+        android:clickable="true"
+        android:focusable="true"/>
 
     <TextView
         android:id="@+id/text_home"
@@ -56,10 +63,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ListView
-        android:layout_width="324dp"
-        android:layout_height="129dp"
-        tools:layout_editor_absoluteX="51dp"
-        tools:layout_editor_absoluteY="206dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
