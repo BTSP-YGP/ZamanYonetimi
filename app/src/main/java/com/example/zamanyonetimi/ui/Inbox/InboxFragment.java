@@ -40,8 +40,6 @@ public class InboxFragment<getApplicationContext> extends Fragment {
     List flagList = new ArrayList();
     FloatingActionButton fabMenu, fabDuzenle, fabSil, fabTamamla, fabDelege, fabEkle;
     Boolean isFABOpen=false;
-    FragmentManager fragman = getFragmentManager();
-    RecyclerView recyclerViewer;
     private ArrayList<CardView> mJobList;
     private InboxViewModel inboxViewModel;
     private InboxAdapter mAdapter;

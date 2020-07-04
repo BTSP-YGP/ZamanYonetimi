@@ -7,61 +7,107 @@
     tools:context=".ui.Matrix.MatrixFragment">
 
     <ListView
-        android:id="@+id/recyclerView2"
-        android:layout_width="204dp"
-        android:layout_height="364dp"
+        android:id="@+id/listview_red"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="#FF0000"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:clickable="true"
-        android:focusable="true" />
+        android:focusable="true"
+        app:layout_constraintBottom_toTopOf="@+id/text_yataySol"
+        app:layout_constraintEnd_toStartOf="@+id/text_dikeyUst"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
-        android:id="@+id/recyclerView6"
-        android:layout_width="204dp"
-        android:layout_height="364dp"
+        android:id="@+id/listview_yellow"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="#FFFF00"
         android:clickable="true"
         android:focusable="true"
+        app:layout_constraintBottom_toTopOf="@+id/text_yataySag"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
-        app:layout_constraintStart_toEndOf="@+id/recyclerView2"
+        app:layout_constraintStart_toEndOf="@+id/text_dikeyUst"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
-        android:id="@+id/recyclerView5"
-        android:layout_width="204dp"
-        android:layout_height="364dp"
+        android:id="@+id/listview_green"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="#008000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView2"
         android:clickable="true"
-        android:focusable="true"/>
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/text_dikeyAlt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_yataySol" />
 
     <ListView
-        android:id="@+id/recyclerView4"
-        android:layout_width="204dp"
-        android:layout_height="364dp"
+        android:id="@+id/listview_blue"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="#0000FF"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/recyclerView5"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView6"
-        android:clickable="true"
-        android:focusable="true"/>
+        app:layout_constraintStart_toEndOf="@+id/text_dikeyAlt"
+        app:layout_constraintTop_toBottomOf="@+id/text_yataySag" />
+
 
     <TextView
-        android:id="@+id/text_home"
-        android:layout_width="417dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
+        android:id="@+id/text_yataySol"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Önemli"
         android:textAlignment="center"
-        android:textSize="12sp"
+        android:textSize="14sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/text_yataySag"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_yataySag"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Değil"
+        android:textAlignment="center"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/text_yataySol"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_dikeyUst"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:rotation="-90"
+        android:text="Acil"
+        android:textAlignment="center"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/text_yataySag"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_dikeyAlt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:rotation="270"
+        android:text="Değil"
+        android:textAlignment="center"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_yataySag" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

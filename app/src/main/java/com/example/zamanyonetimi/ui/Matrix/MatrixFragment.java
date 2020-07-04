@@ -1,9 +1,11 @@
 package com.example.zamanyonetimi.ui.Matrix;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,22 +36,29 @@ import static android.widget.Toast.LENGTH_SHORT;
 public class MatrixFragment extends Fragment {
     DatabaseHelper db;
     View root;
-    List listitemRed = new ArrayList();
+    ArrayList<String> listitemRed = new ArrayList<String>();
     List listitemYellow = new ArrayList();
     List listitemGreen = new ArrayList();
     List listitemBlue = new ArrayList();
-    ArrayAdapter adapter;
 
-    private MatrixViewModel homeViewModel;
+    private MatrixViewModel matrixViewModel;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        homeViewModel =
+        matrixViewModel =
                 ViewModelProviders.of(this).get(MatrixViewModel.class);
         View root = inflater.inflate(R.layout.fragment_matrix, container, false);
+        final ListView listviewRed = root.findViewById(R.id.listview_red);
+        final ListView listviewYellow = root.findViewById(R.id.listview_yellow);
+
         ViewData();
+
+        // her liste için adapter oluşturuldu
+        ArrayAdapter<String> adapterRed = new ArrayAdapter<String>(container.getContext(), R.layout.matrix_item,  listitemRed);
+        listviewRed.setAdapter(adapterRed);
+
         return root;
     }
 
@@ -83,4 +92,5 @@ public class MatrixFragment extends Fragment {
         }
         cursor.close();
     }
+
 }
