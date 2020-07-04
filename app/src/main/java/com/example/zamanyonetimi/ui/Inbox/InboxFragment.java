@@ -35,7 +35,7 @@ public class InboxFragment<getApplicationContext> extends Fragment {
 
     DatabaseHelper myDb;
     Integer selectedPosition;
-    List jobList = new ArrayList<>();
+    List jobList = new ArrayList();
     List descriptionList = new ArrayList();
     List flagList = new ArrayList();
     FloatingActionButton fabMenu, fabDuzenle, fabSil, fabTamamla, fabDelege, fabEkle;
