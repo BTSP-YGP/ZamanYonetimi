@@ -3,6 +3,11 @@
     <string name="title_home">Matrix</string>
     <string name="title_dashboard">Inbox</string>
     <string name="title_notifications">Notifications</string>
+    <string name="reminder">REMINDER</string>
+    <string name="set_reminder">SET REMINDER</string>
+    <string name="hat_rlat_c">Hatırlatıcı</string>
+    <string name="hatirlatici_kaydet">HATIRLATICI KAYDET</string>
+    <string name="hatirlatici_ayarla">HATIRLATICI AYARLA</string>
 
     <string-array name="gorevler">
         <item>Alisveris Yap</item>
