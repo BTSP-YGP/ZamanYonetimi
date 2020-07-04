@@ -20,21 +20,6 @@
         app:layout_constraintStart_toEndOf="@+id/textViewBitis"
         app:layout_constraintTop_toBottomOf="@+id/editTextBaslangic" />
 
-    <EditText
-        android:id="@+id/editTextReminderDate"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:ems="10"
-        android:focusable="false"
-        android:inputType="date"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/checkBoxHatirlatici"
-        app:layout_constraintTop_toBottomOf="@+id/editTextBitis" />
-
     <TextView
         android:id="@+id/textViewBitis"
         android:layout_width="125dp"
@@ -70,12 +55,14 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
+        android:layout_marginBottom="226dp"
         android:ems="10"
         android:inputType="text"
         android:maxLength="23"
         android:maxLines="1"
         android:singleLine="true"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/textviewtarih"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textViewName"
         app:layout_constraintTop_toTopOf="parent" />
@@ -157,23 +144,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewBitis" />
 
-    <EditText
-        android:id="@+id/editTextReminderTime"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:ems="10"
-        android:focusable="false"
-        android:inputType="time"
-        android:maxLength="5"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/checkBoxHatirlatici"
-        app:layout_constraintTop_toBottomOf="@+id/editTextReminderDate" />
-
     <TextView
         android:id="@+id/textViewDescription"
         android:layout_width="125dp"
@@ -206,4 +176,26 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textViewDescription"
         app:layout_constraintTop_toBottomOf="@+id/editTextName" />
+
+    <TextView
+        android:id="@+id/textviewtarih"
+        android:layout_width="202dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="19dp"
+        android:text="Tarih"
+        app:layout_constraintBottom_toTopOf="@+id/textviewsaat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/checkBoxHatirlatici"
+        app:layout_constraintTop_toBottomOf="@+id/editTextName" />
+
+    <TextView
+        android:id="@+id/textviewsaat"
+        android:layout_width="194dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="345dp"
+        android:text="Saat"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/checkBoxHatirlatici"
+        app:layout_constraintTop_toBottomOf="@+id/textviewtarih" />
 </androidx.constraintlayout.widget.ConstraintLayout>

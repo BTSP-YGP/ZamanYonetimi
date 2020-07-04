@@ -3,6 +3,7 @@ package com.example.zamanyonetimi;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import com.example.zamanyonetimi.ui.Inbox.InboxAdapter;
@@ -19,7 +21,8 @@ import java.util.Calendar;
 
 public class EditJob extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     DatabaseHelper myDb;
-    EditText editName, editDescription, editBaslangic, editBitis, editRemindDate, editRemindTime;
+    EditText editName, editDescription, editBaslangic, editBitis;
+    TextView textViewtarih,textViewsaat;
     CheckBox chkHatirlatici, chkOnemli, chkAcil;
     FloatingActionButton duzenleBtn;
     Calendar takvim = Calendar.getInstance();
@@ -43,8 +46,6 @@ public class EditJob extends AppCompatActivity implements DatePickerDialog.OnDat
         editDescription = (EditText)findViewById(R.id.editTextDescription);
         editBaslangic = (EditText)findViewById(R.id.editTextBaslangic);
         editBitis = (EditText)findViewById(R.id.editTextBitis);
-        editRemindDate = (EditText)findViewById(R.id.editTextReminderDate);
-        editRemindTime = (EditText)findViewById(R.id.editTextReminderTime);
         chkHatirlatici = (CheckBox) findViewById(R.id.checkBoxHatirlatici);
         chkOnemli = (CheckBox) findViewById(R.id.checkBoxOnemli);
         chkAcil = (CheckBox) findViewById(R.id.checkBoxAcil);
@@ -117,21 +118,30 @@ public class EditJob extends AppCompatActivity implements DatePickerDialog.OnDat
         chkHatirlatici.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (chkHatirlatici.isChecked()) {
-                    editRemindDate.setVisibility(View.VISIBLE);
-                    editRemindTime.setVisibility(View.VISIBLE);
+
+                Intent intent=new Intent(EditJob.this,MainReminder.class);
+                startActivity(intent);
+
+
+               /*if (chkHatirlatici.isChecked()) {
+                    textViewtarih.setVisibility(View.VISIBLE);
+                    textViewsaat.setVisibility(View.VISIBLE);
                 }
                 else {
-                    editRemindDate.setVisibility(View.INVISIBLE);
-                    editRemindTime.setVisibility(View.INVISIBLE);
-                    editRemindTime.setText("");
-                    editRemindDate.setText("");
-                }
+                    textViewtarih.setVisibility(View.INVISIBLE);
+                    textViewsaat.setVisibility(View.INVISIBLE);
+                    textViewsaat.setText("");
+                    textViewtarih.setText("");
+                }*/
+
             }
         });
 
 
-        editRemindDate.setOnClickListener(new View.OnClickListener() {
+
+
+
+        /*editRemindDate.setOnClickListener(new View.OnClickListener() {
                 Calendar calBas = Calendar.getInstance();
                 int day = calBas.get(Calendar.DAY_OF_MONTH);
                 int month = calBas.get(Calendar.MONTH);
@@ -165,7 +175,7 @@ public class EditJob extends AppCompatActivity implements DatePickerDialog.OnDat
                         }, hour, minutes, true);
                 picker.show();
             }
-        });
+        });*/
 
         duzenleBtn.setOnClickListener (
             new View.OnClickListener() {
@@ -236,8 +246,8 @@ public class EditJob extends AppCompatActivity implements DatePickerDialog.OnDat
         editDescription.setText("");
         editBaslangic.setText("");
         editBitis.setText("");
-        editRemindDate.setText("");
-        editRemindTime.setText("");
+       // editRemindDate.setText("");
+      //  editRemindTime.setText("");
         chkHatirlatici.setChecked(false);
         chkOnemli.setChecked(false);
         chkAcil.setChecked(false);
