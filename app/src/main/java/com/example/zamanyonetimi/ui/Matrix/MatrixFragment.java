@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.zamanyonetimi.DatabaseHelper;
 import com.example.zamanyonetimi.R;
+import com.example.zamanyonetimi.ui.Inbox.InboxAdapter;
 import com.example.zamanyonetimi.ui.Inbox.InboxFragment;
 
 import java.util.ArrayList;
@@ -38,9 +39,9 @@ public class MatrixFragment extends Fragment {
     DatabaseHelper db;
     View root;
     ArrayList<String> listitemRed = new ArrayList<String>();
-    List listitemYellow = new ArrayList();
-    List listitemGreen = new ArrayList();
-    List listitemBlue = new ArrayList();
+    ArrayList<String> listitemYellow = new ArrayList();
+    ArrayList<String> listitemGreen = new ArrayList();
+    ArrayList<String> listitemBlue = new ArrayList();
 
     private MatrixViewModel matrixViewModel;
 
@@ -54,7 +55,7 @@ public class MatrixFragment extends Fragment {
         final ListView listviewRed = root.findViewById(R.id.listview_red);
         final ListView listviewYellow = root.findViewById(R.id.listview_yellow);
         final ListView listviewBlue=root.findViewById(R.id.listview_blue);
-        final ListView listviewgreen=root.findViewById(R.id.listview_green);
+        final ListView listviewGreen=root.findViewById(R.id.listview_green);
 
         ViewData();
 
@@ -67,7 +68,6 @@ public class MatrixFragment extends Fragment {
         listviewRed.setAdapter(adapterBlue);
         ArrayAdapter<String> adapterGreen = new ArrayAdapter<String>(container.getContext(), R.layout.matrix_item, listitemGreen);
         listviewRed.setAdapter(adapterGreen);
-
 
 
         return root;
