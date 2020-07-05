@@ -2,6 +2,7 @@ package com.example.zamanyonetimi;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.annotation.SuppressLint;
@@ -76,8 +77,16 @@ public class MainReminder extends AppCompatActivity {
 
                 assert alarmMgr != null;
                 alarmMgr.set(AlarmManager.RTC_WAKEUP, mills, pendingIntent);
-                Toast.makeText(MainReminder.this, "Event scheduled at " + Hour + ":" + Minute + " " + Day + "/" + Month + "/" + Year, Toast.LENGTH_LONG).show();
-                textView.setText(+Day +"/" +Month+"/ "+Year+"  "+Hour+ ":"  +Minute);
+                //Toast.makeText(MainReminder.this, "Event scheduled at " + Hour + ":" + Minute + " " + Day + "/" + Month + "/" + Year, Toast.LENGTH_LONG).show();
+                //textView.setText(+Day +"/" +Month+"/ "+Year+"  "+Hour+ ":"  +Minute);
+
+                String dateBack = Day +"/" +Month+"/"+Year;
+                String timeBack = Hour+ ":" +Minute;
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("date",dateBack);
+                returnIntent.putExtra("time",timeBack);
+                setResult(Activity.RESULT_OK,returnIntent);
+                finish();
             }
 
 
@@ -115,8 +124,18 @@ public class MainReminder extends AppCompatActivity {
                 public void onTimeSet(TimePicker timePicker, int h, int min) {
                     Hour = h;
                     Minute = min;
+                    textView.setText(+Day +"/" +Month+"/ "+Year+"  "+Hour+ ":"  +Minute);
                 }
             };
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("result",textView.getText().toString());
+        setResult(Activity.RESULT_CANCELED, returnIntent);
+        finish();
+    }
 }
 
 

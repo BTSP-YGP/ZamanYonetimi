@@ -1,30 +1,26 @@
 package com.example.zamanyonetimi.ui.Inbox;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.zamanyonetimi.DatabaseHelper;
 import com.example.zamanyonetimi.EditJob;
 import com.example.zamanyonetimi.MailSending;
-import com.example.zamanyonetimi.MainActivity;
 import com.example.zamanyonetimi.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -40,6 +36,7 @@ public class InboxFragment<getApplicationContext> extends Fragment {
     List flagList = new ArrayList();
     FloatingActionButton fabMenu, fabDuzenle, fabSil, fabTamamla, fabDelege, fabEkle;
     Boolean isFABOpen=false;
+    int EDITJOB_ACTIVITY, MAILSENDING_ACTIVITY = 1;
     private ArrayList<CardView> mJobList;
     private InboxViewModel inboxViewModel;
     private InboxAdapter mAdapter;
@@ -149,15 +146,22 @@ public class InboxFragment<getApplicationContext> extends Fragment {
 
         });
 
-
-
         fabDelege.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent startIntent = new Intent(container.getContext(), MailSending.class);
-                startIntent.putExtra("editJobName", jobList.get(selectedPosition).toString());
-                startActivity(startIntent);
-
+                if (selectedPosition != null) {
+                    mAdapter.setOnItemClickListener(new InboxAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(int position) {
+//
+                        }
+                    });
+                    Intent startIntent = new Intent(container.getContext(), MailSending.class);
+                    startIntent.putExtra("editJobName", jobList.get(selectedPosition).toString());
+                    startActivityForResult(startIntent, MAILSENDING_ACTIVITY);
+                } else {
+                    Toast.makeText(getContext(), "Bir görev seçiniz!", Toast.LENGTH_LONG).show();
+                }
             }
 
             Intent intent = new Intent(container.getContext(), MailSending.class);
@@ -241,12 +245,43 @@ public class InboxFragment<getApplicationContext> extends Fragment {
         fabEkle.animate().translationX(0);
     }
 
-    public void callInbox () {
-        InboxFragment inboxfragment = new InboxFragment();
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.nav_host_fragment_container, inboxfragment);
-        fragmentTransaction.commit();
-    };
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+ /*       if (requestCode == EDITJOB_ACTIVITY) {
+            if(resultCode == Activity.RESULT_OK){
+                String resDate =data.getStringExtra("date");
+                String resTime =data.getStringExtra("time");
+                SQLiteDatabase dbs = myDb.getWritableDatabase();
+                Cursor curExist = dbs.rawQuery("select * from reminders where name = \'" + editName.getText().toString() + "\'", null);
+                if (curExist.getCount() > 0) {
+                    myDb.updateReminder(editName.getText().toString(), resDate, resTime);
+                    Toast.makeText(getApplicationContext(), "Hatirlatici "+resDate+" günü saat "+resTime+" olarak ayarlandı", Toast.LENGTH_LONG).show();
+                } else {
+                    if (myDb.insertReminder(editName.getText().toString(), resDate, resTime)) {
+                        Toast.makeText(getApplicationContext(), "Hatirlatici "+resDate+" günü saat "+resTime+" olarak güncellendi", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Hatirlatici güncellenemedi", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                Toast.makeText(getApplicationContext(), "Hatirlatici Ayarlanmadi", Toast.LENGTH_LONG).show();
+            }
+
+   */         if (requestCode == MAILSENDING_ACTIVITY) {
+                if(resultCode == Activity.RESULT_OK){
+                    SQLiteDatabase dbs = myDb.getWritableDatabase();
+                    if (myDb.deleteJob(jobList.get(selectedPosition).toString())) {
+                        jobList.remove(selectedPosition);
+                        descriptionList.remove(selectedPosition);
+                        flagList.remove(selectedPosition);
+                        mAdapter.remove(selectedPosition);
+                        Toast.makeText(getContext(), "Görev delege edildi", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        }
 
 }

@@ -18,15 +18,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table if not exists jobs (jobid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT ,"+
-                " description TEXT, baslangic TEXT, bitis TEXT, important BOOLEAN, urgent BOOLEAN, complete BOOLEAN); " +
-                "create table if not exists reminders (name TEXT NOT NULL, reminddate TEXT PRIMARY KEY, remindtime TEXT,"+
+        db.execSQL("create table jobs (jobid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT ,"+
+                " description TEXT, baslangic TEXT, bitis TEXT, important BOOLEAN, urgent BOOLEAN, complete BOOLEAN); ");
+        db.execSQL("create table reminders (name TEXT NOT NULL, reminddate TEXT PRIMARY KEY, remindtime TEXT,"+
                 " FOREIGN KEY(name) REFERENCES jobs(name) ON UPDATE CASCADE ON DELETE CASCADE);");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS jobs, reminders;");
+        db.execSQL("DROP TABLE IF EXISTS jobs;");
+        db.execSQL("DROP TABLE IF EXISTS reminders;");
+
         onCreate(db);
     }
 
@@ -43,22 +45,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long sonuc = db.insert("jobs", null, contentValues);
         return sonuc != -1;
 
-    }
-    public Cursor ViewData(){
-        SQLiteDatabase db=this.getReadableDatabase();
-        String query="Select * from "+JOBS_TABLE;
-        Cursor cursor=db.rawQuery(query,null);
-        return cursor;
-
-    }
-    public boolean insertReminder (String jobName, String reminddate, String remindtime) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("name", jobName);
-        contentValues.put("reminddate", reminddate);
-        contentValues.put("remindtime", remindtime);
-        long sonuc = db.insert("reminders", null, contentValues);
-        return sonuc != -1;
     }
 
     public boolean deleteJob (String jobName) {
@@ -86,5 +72,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("UPDATE jobs SET complete = "+ durum.toString() +" WHERE name = \'"+ jobName+"\'");
     }
 
+    public boolean insertReminder (String jobName, String reminddate, String remindtime) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("name", jobName);
+        contentValues.put("reminddate", reminddate);
+        contentValues.put("remindtime", remindtime);
+        long sonuc = db.insert("reminders", null, contentValues);
+        return sonuc != -1;
+    }
 
+    public boolean updateReminder (String jobName, String reminddate, String remindtime) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("name", jobName);
+        contentValues.put("reminddate", reminddate);
+        contentValues.put("remindtime", remindtime);
+        long sonuc = db.update("reminders", contentValues, "name = \'"+ jobName+"\'", null);
+        return sonuc != -1;
+    }
+
+    public Cursor ViewData(){
+        SQLiteDatabase db=this.getReadableDatabase();
+        String query="Select * from "+JOBS_TABLE;
+        Cursor cursor=db.rawQuery(query,null);
+        return cursor;
+
+    }
 }
