@@ -36,7 +36,7 @@ public class InboxFragment<getApplicationContext> extends Fragment {
     List flagList = new ArrayList();
     FloatingActionButton fabMenu, fabDuzenle, fabSil, fabTamamla, fabDelege, fabEkle;
     Boolean isFABOpen=false;
-    int EDITJOB_ACTIVITY, MAILSENDING_ACTIVITY = 1;
+    int EDITJOB_ACTIVITY = 1, MAILSENDING_ACTIVITY = 2;
     private ArrayList<CardView> mJobList;
     private InboxViewModel inboxViewModel;
     private InboxAdapter mAdapter;
@@ -96,7 +96,7 @@ public class InboxFragment<getApplicationContext> extends Fragment {
                     });
                     Intent startIntent = new Intent(container.getContext(), EditJob.class);
                     startIntent.putExtra("editJobName", jobList.get(selectedPosition).toString());
-                    startActivity(startIntent);
+                    startActivityForResult(startIntent, EDITJOB_ACTIVITY);
                 } else {
                     Toast.makeText(getContext(), "Bir görev seçiniz!", Toast.LENGTH_LONG).show();
                 }
@@ -111,12 +111,12 @@ public class InboxFragment<getApplicationContext> extends Fragment {
                 builder.setMessage("Gorev silinsin mi?");
                 builder.setPositiveButton("Sil", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        if (myDb.deleteJob(jobList.get(selectedPosition).toString())) {
-                            jobList.remove(selectedPosition);
-                            descriptionList.remove(selectedPosition);
-                            flagList.remove(selectedPosition);
-                            mAdapter.remove(selectedPosition);
-                        }
+                            if (myDb.deleteJob(jobList.get(selectedPosition).toString())) {
+                                jobList.remove(selectedPosition);
+                                descriptionList.remove(selectedPosition);
+                                flagList.remove(selectedPosition);
+                                mAdapter.remove(selectedPosition);
+                            }
                     }
                 });
                 builder.setNegativeButton("Vazgeç", new DialogInterface.OnClickListener() {
@@ -248,40 +248,41 @@ public class InboxFragment<getApplicationContext> extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+      if (requestCode == EDITJOB_ACTIVITY) {
+          if (resultCode == Activity.RESULT_OK) {
+              String resStatus =data.getStringExtra("status");
+              jobList.clear();
+              descriptionList.clear();
+              flagList.clear();
+              fetchData();
+              if (resStatus.equals("ekleme")) {
+                 /*mAdapter.add(jobList.size()-1, jobList.get(jobList.size()-1).toString(),
+                         descriptionList.get(descriptionList.size()-1).toString(),
+                         flagList.get(flagList.size()-1).toString());*/
+                 Toast.makeText(getContext(),"Eklendi" , Toast.LENGTH_LONG).show();
+              } else {
+                 mAdapter.update(selectedPosition, jobList.get(selectedPosition).toString(),
+                         descriptionList.get(selectedPosition).toString(),
+                         flagList.get(selectedPosition).toString());
+                 Toast.makeText(getContext(),"Guncellendi" , Toast.LENGTH_LONG).show();
 
- /*       if (requestCode == EDITJOB_ACTIVITY) {
+
+             }
+
+          }
+      }
+        if (requestCode == MAILSENDING_ACTIVITY) {
             if(resultCode == Activity.RESULT_OK){
-                String resDate =data.getStringExtra("date");
-                String resTime =data.getStringExtra("time");
                 SQLiteDatabase dbs = myDb.getWritableDatabase();
-                Cursor curExist = dbs.rawQuery("select * from reminders where name = \'" + editName.getText().toString() + "\'", null);
-                if (curExist.getCount() > 0) {
-                    myDb.updateReminder(editName.getText().toString(), resDate, resTime);
-                    Toast.makeText(getApplicationContext(), "Hatirlatici "+resDate+" günü saat "+resTime+" olarak ayarlandı", Toast.LENGTH_LONG).show();
-                } else {
-                    if (myDb.insertReminder(editName.getText().toString(), resDate, resTime)) {
-                        Toast.makeText(getApplicationContext(), "Hatirlatici "+resDate+" günü saat "+resTime+" olarak güncellendi", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Hatirlatici güncellenemedi", Toast.LENGTH_LONG).show();
-                    }
-                }
-            }
-            if (resultCode == Activity.RESULT_CANCELED) {
-                Toast.makeText(getApplicationContext(), "Hatirlatici Ayarlanmadi", Toast.LENGTH_LONG).show();
-            }
-
-   */         if (requestCode == MAILSENDING_ACTIVITY) {
-                if(resultCode == Activity.RESULT_OK){
-                    SQLiteDatabase dbs = myDb.getWritableDatabase();
-                    if (myDb.deleteJob(jobList.get(selectedPosition).toString())) {
-                        jobList.remove(selectedPosition);
-                        descriptionList.remove(selectedPosition);
-                        flagList.remove(selectedPosition);
-                        mAdapter.remove(selectedPosition);
-                        Toast.makeText(getContext(), "Görev delege edildi", Toast.LENGTH_LONG).show();
-                    }
+                if (myDb.deleteJob(jobList.get(selectedPosition).toString())) {
+                    jobList.remove(selectedPosition);
+                    descriptionList.remove(selectedPosition);
+                    flagList.remove(selectedPosition);
+                    mAdapter.remove(selectedPosition);
+                    Toast.makeText(getContext(), "Görev delege edildi", Toast.LENGTH_LONG).show();
                 }
             }
         }
+    }
 
 }

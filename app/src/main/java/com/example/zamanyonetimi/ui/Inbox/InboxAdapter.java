@@ -65,6 +65,13 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.InboxViewHol
         }
     }
 
+    public void add(Integer position, String s1, String s2, String s3) {
+        data1.add(s1);
+        data2.add(s2);
+        data3.add(s3);
+        this.notifyItemInserted(position);
+    }
+
     public void remove(int position)
     {
         data1.remove(position);
@@ -73,14 +80,11 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.InboxViewHol
         this.notifyDataSetChanged();
     }
 
-    public void update(List s1, List s2, List s3) {
-       data1.clear();
-       data2.clear();
-       data3.clear();
-        data1 = s1;
-        data2 = s2;
-        data3 = s3;
-        this.notifyDataSetChanged();
+    public void update(Integer position, String s1, String s2, String s3) {
+        data1.set(position, s1);
+        data2.set(position, s2);
+        data3.set(position, s3);
+        this.notifyItemChanged(position);
     }
 
     public void tamamUpdate (int position, String durum)

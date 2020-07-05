@@ -156,8 +156,10 @@ public class EditJob extends AppCompatActivity implements DatePickerDialog.OnDat
                                         chkOnemli.isChecked(),
                                         chkAcil.isChecked());
                                 if (databaseIslendi) {
-                                    Toast.makeText(getApplicationContext(), "Görev İşlendi", Toast.LENGTH_LONG).show();
-                                    finishAndRemoveTask();
+                                    Intent returnIntent = new Intent();
+                                    setResult(Activity.RESULT_OK,returnIntent);
+                                    returnIntent.putExtra("status","ekleme");
+                                    finish();
 
                                 } else {
                                     Toast.makeText(getApplicationContext(), "Görev İşlenemedi", Toast.LENGTH_LONG).show();
@@ -171,7 +173,9 @@ public class EditJob extends AppCompatActivity implements DatePickerDialog.OnDat
                                     chkOnemli.isChecked(),
                                     chkAcil.isChecked());
                             if (databaseIslendi) {
-                                Toast.makeText(getApplicationContext(), "Görev güncellendi", Toast.LENGTH_LONG).show();
+                                Intent returnIntent = new Intent();
+                                setResult(Activity.RESULT_OK,returnIntent);
+                                returnIntent.putExtra("status","duzenle");
                                 finishAndRemoveTask();
 
                             } else {
