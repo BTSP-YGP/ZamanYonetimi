@@ -26,7 +26,9 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.zamanyonetimi.DatabaseHelper;
+import com.example.zamanyonetimi.EditJob;
 import com.example.zamanyonetimi.R;
+import com.example.zamanyonetimi.ui.Inbox.InboxAdapter;
 import com.example.zamanyonetimi.ui.Inbox.InboxFragment;
 
 import java.util.ArrayList;
@@ -36,7 +38,8 @@ import static android.widget.Toast.LENGTH_SHORT;
 
 public class MatrixFragment extends Fragment {
     DatabaseHelper db;
-    ArrayList<String> listitemRed = new ArrayList();
+    View root;
+    ArrayList<String> listitemRed = new ArrayList<String>();
     ArrayList<String> listitemYellow = new ArrayList();
     ArrayList<String> listitemGreen = new ArrayList();
     ArrayList<String> listitemBlue = new ArrayList();
@@ -53,7 +56,7 @@ public class MatrixFragment extends Fragment {
         final ListView listviewRed = root.findViewById(R.id.listview_red);
         final ListView listviewYellow = root.findViewById(R.id.listview_yellow);
         final ListView listviewBlue=root.findViewById(R.id.listview_blue);
-        final ListView listviewgreen=root.findViewById(R.id.listview_green);
+        final ListView listviewGreen=root.findViewById(R.id.listview_green);
 
         ViewData();
 
@@ -61,15 +64,12 @@ public class MatrixFragment extends Fragment {
         ArrayAdapter<String> adapterRed = new ArrayAdapter<String>(container.getContext(), R.layout.matrix_item, listitemRed);
         listviewRed.setAdapter(adapterRed);
         ArrayAdapter<String> adapterYellow = new ArrayAdapter<String>(container.getContext(), R.layout.matrix_item, listitemYellow);
-        listviewRed.setAdapter(adapterYellow);
+        listviewYellow.setAdapter(adapterYellow);
         ArrayAdapter<String> adapterBlue = new ArrayAdapter<String>(container.getContext(), R.layout.matrix_item, listitemBlue);
-        listviewRed.setAdapter(adapterBlue);
+        listviewBlue.setAdapter(adapterBlue);
         ArrayAdapter<String> adapterGreen = new ArrayAdapter<String>(container.getContext(), R.layout.matrix_item, listitemGreen);
-        listviewRed.setAdapter(adapterGreen);
-
-
-
-        return root;
+        listviewGreen.setAdapter(adapterGreen);
+       return root;
     }
 
     public void ViewData() {
