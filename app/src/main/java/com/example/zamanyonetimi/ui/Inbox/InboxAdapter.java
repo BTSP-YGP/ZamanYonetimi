@@ -12,20 +12,15 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.zamanyonetimi.R;
-import java.util.ArrayList;
 import java.util.List;
 
 public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.InboxViewHolder> {
-    private ArrayList<CardView> mJobList;
-    private LayoutInflater inflater;
-    private OnItemClickListener mlistener;
-    CardView cardView, cardOld;
-    List data1, data2, data3;
-    Context context;
-    View oldView;
+    private OnItemClickListener moListener;
+    private CardView cardView, cardOld;
+    private List data1, data2, data3;
+    private View oldView;
 
-    public InboxAdapter(Context ct, List s1, List s2, List s3) {
-        context = ct;
+    InboxAdapter(Context ct, List s1, List s2, List s3) {
         data1 = s1;
         data2 = s2;
         data3 = s3;
@@ -35,15 +30,15 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.InboxViewHol
         void onItemClick(int position);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        mlistener = listener;
+    void setOnItemClickListener(OnItemClickListener listener) {
+        moListener = listener;
     }
 
     @NonNull
     @Override
     public InboxViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.inbox_item, parent, false);
-        return new InboxViewHolder(view, (OnItemClickListener) mlistener);
+        return new InboxViewHolder(view, moListener);
     }
 
     @Override
@@ -65,14 +60,14 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.InboxViewHol
         }
     }
 
-    public void add(Integer position, String s1, String s2, String s3) {
+    void add(Integer position, String s1, String s2, String s3) {
         data1.add(s1);
         data2.add(s2);
         data3.add(s3);
         this.notifyItemInserted(position);
     }
 
-    public void remove(int position)
+    void remove(int position)
     {
         data1.remove(position);
         data2.remove(position);
@@ -80,14 +75,14 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.InboxViewHol
         this.notifyDataSetChanged();
     }
 
-    public void update(Integer position, String s1, String s2, String s3) {
+    void update(Integer position, String s1, String s2, String s3) {
         data1.set(position, s1);
         data2.set(position, s2);
         data3.set(position, s3);
         this.notifyItemChanged(position);
     }
 
-    public void tamamUpdate (int position, String durum)
+    void tamamUpdate(int position, String durum)
     {
         data3.set(position, durum);
         this.notifyItemChanged(position);
@@ -98,12 +93,12 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.InboxViewHol
         return data1.size();
     }
 
-    public class InboxViewHolder extends RecyclerView.ViewHolder {
+    class InboxViewHolder extends RecyclerView.ViewHolder {
 
         TextView gorevismi_txt, gorevdescription_txt;
         ImageView gorev_image;
 
-        public InboxViewHolder(@NonNull final View itemView, final OnItemClickListener listener) {
+        InboxViewHolder(@NonNull final View itemView, final OnItemClickListener listener) {
             super(itemView);
             gorevismi_txt = itemView.findViewById(R.id.gorevismi_txt);
             gorevdescription_txt = itemView.findViewById(R.id.gorevdescription_txt);
@@ -112,26 +107,26 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.InboxViewHol
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (oldView == null) {
-                        oldView = v;
-                    } else {
-                        cardOld = oldView.findViewById(R.id.cardJob);
-                        cardOld.setCardBackgroundColor(Color.WHITE);
-                        oldView = v;
+                if (oldView == null) {
+                    oldView = v;
+                } else {
+                    cardOld = oldView.findViewById(R.id.cardJob);
+                    cardOld.setCardBackgroundColor(Color.WHITE);
+                    oldView = v;
+                }
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(position);
                     }
-                    if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(position);
-                        }
-                        cardView = v.findViewById(R.id.cardJob);
-                        if (cardView.getCardBackgroundColor().getDefaultColor() == Color.BLUE) {
-                            cardView.setCardBackgroundColor(Color.WHITE);
-                        }
-                        else {
-                            cardView.setCardBackgroundColor(Color.BLUE);
-                        }
+                    cardView = v.findViewById(R.id.cardJob);
+                    if (cardView.getCardBackgroundColor().getDefaultColor() == Color.BLUE) {
+                        cardView.setCardBackgroundColor(Color.WHITE);
                     }
+                    else {
+                        cardView.setCardBackgroundColor(Color.BLUE);
+                    }
+                }
                 }
             });
         }

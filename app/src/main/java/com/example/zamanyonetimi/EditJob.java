@@ -2,9 +2,9 @@ package com.example.zamanyonetimi;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,30 +14,26 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
-import com.example.zamanyonetimi.ui.Inbox.InboxAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.Calendar;
 
 
 public class EditJob extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
-    DatabaseHelper myDb;
-    EditText editName, editDescription, editBaslangic, editBitis;
-    CheckBox chkOnemli, chkAcil;
-    Button hatirlaticiBtn;
-    FloatingActionButton duzenleBtn;
-    Calendar takvim = Calendar.getInstance();
-    Integer jobId;
-    String editJobName;
+    private DatabaseHelper myDb;
+    private EditText editName, editDescription, editBaslangic, editBitis;
+    private CheckBox chkOnemli, chkAcil;
+    private Button hatirlaticiBtn;
+    private Calendar takvim = Calendar.getInstance();
+    private Integer jobId;
+    private String editJobName;
     int HATIRLATICI_ACTIVITY;
-    private InboxAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle b = getIntent().getExtras();
+        assert b != null;
         editJobName = b.getString("editJobName");
 
         setContentView(R.layout.activity_edit_job);
@@ -46,35 +42,35 @@ public class EditJob extends AppCompatActivity implements DatePickerDialog.OnDat
         SQLiteDatabase db = myDb.getWritableDatabase();
 
 
-        editName = (EditText)findViewById(R.id.editTextName);
-        editDescription = (EditText)findViewById(R.id.editTextDescription);
-        editBaslangic = (EditText)findViewById(R.id.editTextBaslangic);
-        editBitis = (EditText)findViewById(R.id.editTextBitis);
-        chkOnemli = (CheckBox) findViewById(R.id.checkBoxOnemli);
-        chkAcil = (CheckBox) findViewById(R.id.checkBoxAcil);
-        hatirlaticiBtn = (Button) findViewById(R.id.buttonHatirlatici);
-        duzenleBtn = (FloatingActionButton)findViewById(R.id.duzenletusu);
+        editName = findViewById(R.id.editTextName);
+        editDescription = findViewById(R.id.editTextDescription);
+        editBaslangic = findViewById(R.id.editTextBaslangic);
+        editBitis = findViewById(R.id.editTextBitis);
+        chkOnemli = findViewById(R.id.checkBoxOnemli);
+        chkAcil = findViewById(R.id.checkBoxAcil);
+        hatirlaticiBtn = findViewById(R.id.buttonHatirlatici);
+        FloatingActionButton duzenleBtn = findViewById(R.id.duzenletusu);
 
-        if (editJobName != "xeklex") {
+        if (!editJobName.equals("xeklex")) {
             Cursor res = db.rawQuery("select * from jobs where name = \'"+ editJobName+"\'", null);
             while (res.moveToNext()) {
                 jobId = res.getInt(res.getColumnIndex("jobid"));
-                if (res.getString(res.getColumnIndex("name")) != "") {
+                if (!res.getString(res.getColumnIndex("name")).equals("")) {
                     editName.setText(res.getString(res.getColumnIndex("name")));
                 }
-                if (res.getString(res.getColumnIndex("description")) != "") {
+                if (!res.getString(res.getColumnIndex("description")).equals("")) {
                     editDescription.setText(res.getString(res.getColumnIndex("description")));
                 }
-                if (res.getString(res.getColumnIndex("baslangic")) != "") {
+                if (!res.getString(res.getColumnIndex("baslangic")).equals("")) {
                     editBaslangic.setText(res.getString(res.getColumnIndex("baslangic")));
                 }
-                if (res.getString(res.getColumnIndex("bitis")) != "") {
+                if (!res.getString(res.getColumnIndex("bitis")).equals("")) {
                     editBitis.setText(res.getString(res.getColumnIndex("bitis")));
                 }
-                if (res.getString(res.getColumnIndex("important")) == "1") {
+                if (res.getString(res.getColumnIndex("important")).equals("1")) {
                     chkOnemli.setChecked(true);
                 }
-                if (res.getString(res.getColumnIndex("urgent")) == "1") {
+                if (res.getString(res.getColumnIndex("urgent")).equals("1")) {
                     chkAcil.setChecked(true);
                 }
             }
@@ -85,7 +81,7 @@ public class EditJob extends AppCompatActivity implements DatePickerDialog.OnDat
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    if (editName.getText().toString() != "") {
+                    if (!editName.getText().toString().equals("")) {
                             hatirlaticiBtn.setEnabled(true);
                     }
                 }
@@ -102,6 +98,7 @@ public class EditJob extends AppCompatActivity implements DatePickerDialog.OnDat
             public void onClick(View v) {
                 DatePickerDialog datePicker = new DatePickerDialog(EditJob.this,
                         new DatePickerDialog.OnDateSetListener() {
+                            @SuppressLint("SetTextI18n")
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                                 editBaslangic.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
@@ -121,6 +118,7 @@ public class EditJob extends AppCompatActivity implements DatePickerDialog.OnDat
                 public void onClick(View v) {
                     DatePickerDialog datePicker = new DatePickerDialog(EditJob.this,
                             new DatePickerDialog.OnDateSetListener() {
+                                @SuppressLint("SetTextI18n")
                                 @Override
                                 public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                                     editBitis.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
@@ -145,7 +143,7 @@ public class EditJob extends AppCompatActivity implements DatePickerDialog.OnDat
                     if (editName != null) {
                         SQLiteDatabase dbs = myDb.getWritableDatabase();
                         if (editJobName.equals("xeklex")) {
-                            Cursor curExist = dbs.rawQuery("select * from jobs where name = \'" + editName.getText().toString() + "\'", null);
+                            @SuppressLint("Recycle") Cursor curExist = dbs.rawQuery("select * from jobs where name = \'" + editName.getText().toString() + "\'", null);
                             if (curExist.getCount() > 0) {
                                 Toast.makeText(getApplicationContext(), "Görev ismi mevcut, lütfen değiştirin", Toast.LENGTH_LONG).show();
                             } else {
@@ -201,7 +199,7 @@ public class EditJob extends AppCompatActivity implements DatePickerDialog.OnDat
                 String resDate =data.getStringExtra("date");
                 String resTime =data.getStringExtra("time");
                 SQLiteDatabase dbs = myDb.getWritableDatabase();
-                Cursor curExist = dbs.rawQuery("select * from reminders where name = \'" + editName.getText().toString() + "\'", null);
+                @SuppressLint("Recycle") Cursor curExist = dbs.rawQuery("select * from reminders where name = \'" + editName.getText().toString() + "\'", null);
                 if (curExist.getCount() > 0) {
                     myDb.updateReminder(editName.getText().toString(), resDate, resTime);
                     Toast.makeText(getApplicationContext(), "Hatirlatici "+resDate+" günü saat "+resTime+" olarak ayarlandı", Toast.LENGTH_LONG).show();

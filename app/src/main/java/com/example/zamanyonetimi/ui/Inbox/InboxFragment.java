@@ -2,7 +2,6 @@ package com.example.zamanyonetimi.ui.Inbox;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -13,9 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.zamanyonetimi.DatabaseHelper;
@@ -27,26 +24,22 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InboxFragment<getApplicationContext> extends Fragment {
-
-    DatabaseHelper myDb;
-    Integer selectedPosition;
-    List jobList = new ArrayList();
-    List descriptionList = new ArrayList();
-    List flagList = new ArrayList();
-    FloatingActionButton fabMenu, fabDuzenle, fabSil, fabTamamla, fabDelege, fabEkle;
-    Boolean isFABOpen=false;
-    int EDITJOB_ACTIVITY = 1, MAILSENDING_ACTIVITY = 2;
-    private ArrayList<CardView> mJobList;
-    private InboxViewModel inboxViewModel;
+public class InboxFragment extends Fragment {
+    private DatabaseHelper myDb;
+    private Integer selectedPosition;
+    private List jobList = new ArrayList();
+    private List descriptionList = new ArrayList();
+    private List flagList = new ArrayList();
+    private FloatingActionButton fabMenu, fabDuzenle, fabSil, fabTamamla, fabDelege, fabEkle;
+    private Boolean isFABOpen=false;
+    private int EDITJOB_ACTIVITY = 1, MAILSENDING_ACTIVITY = 2;
     private InboxAdapter mAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              final ViewGroup container, Bundle savedInstanceState) {
 
         fetchData();
-        inboxViewModel =
-                ViewModelProviders.of(this).get(InboxViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_inbox, container, false);
         final RecyclerView recyclerViewer = root.findViewById(R.id.recyclerView);
 
@@ -61,12 +54,12 @@ public class InboxFragment<getApplicationContext> extends Fragment {
             }
         });
 
-        fabMenu = (FloatingActionButton) root.findViewById(R.id.fab_menu);
-        fabDuzenle = (FloatingActionButton) root.findViewById(R.id.fab_duzenle);
-        fabEkle = (FloatingActionButton) root.findViewById(R.id.fab_ekle);
-        fabSil = (FloatingActionButton) root.findViewById(R.id.fab_sil);
-        fabDelege = (FloatingActionButton) root.findViewById(R.id.fab_delege);
-        fabTamamla = (FloatingActionButton) root.findViewById(R.id.fab_tamamla);
+        fabMenu = root.findViewById(R.id.fab_menu);
+        fabDuzenle = root.findViewById(R.id.fab_duzenle);
+        fabEkle = root.findViewById(R.id.fab_ekle);
+        fabSil = root.findViewById(R.id.fab_sil);
+        fabDelege = root.findViewById(R.id.fab_delege);
+        fabTamamla = root.findViewById(R.id.fab_tamamla);
 
         fabEkle.setOnClickListener(new View.OnClickListener() {
                @Override
@@ -132,7 +125,7 @@ public class InboxFragment<getApplicationContext> extends Fragment {
         fabTamamla.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (flagList.get(selectedPosition).toString() == "tamam") {
+                if (flagList.get(selectedPosition).toString().equals("tamam")) {
                     myDb.tamamlaJob(jobList.get(selectedPosition).toString(), 0);
                     flagList.set(selectedPosition, "");
                     mAdapter.tamamUpdate(selectedPosition, "");
@@ -172,7 +165,7 @@ public class InboxFragment<getApplicationContext> extends Fragment {
         return root;
     }
 
-    public void fetchData () {
+    private void fetchData() {
         myDb = new DatabaseHelper(getContext());
         SQLiteDatabase db = myDb.getWritableDatabase();
         Cursor res = db.rawQuery("select * from jobs", null);
@@ -199,7 +192,7 @@ public class InboxFragment<getApplicationContext> extends Fragment {
         res.close();
     }
 
-    public void ViewAll () {
+    private void ViewAll() {
         fabMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -255,10 +248,11 @@ public class InboxFragment<getApplicationContext> extends Fragment {
               descriptionList.clear();
               flagList.clear();
               fetchData();
+              assert resStatus != null;
               if (resStatus.equals("ekleme")) {
-                 /*mAdapter.add(jobList.size()-1, jobList.get(jobList.size()-1).toString(),
+                 mAdapter.add(jobList.size()-1, jobList.get(jobList.size()-1).toString(),
                          descriptionList.get(descriptionList.size()-1).toString(),
-                         flagList.get(flagList.size()-1).toString());*/
+                         flagList.get(flagList.size()-1).toString());
                  Toast.makeText(getContext(),"Eklendi" , Toast.LENGTH_LONG).show();
               } else {
                  mAdapter.update(selectedPosition, jobList.get(selectedPosition).toString(),

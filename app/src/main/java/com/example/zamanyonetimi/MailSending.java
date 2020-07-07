@@ -1,7 +1,7 @@
 package com.example.zamanyonetimi;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -9,34 +9,31 @@ import android.database.sqlite.SQLiteDatabase;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
 import android.os.Bundle;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MailSending extends AppCompatActivity {
-    DatabaseHelper myDb;
-    EditText to;
-    EditText editTextSubject;
-    EditText editTextMessage;
-    Button button;
-    String editJobName;
+    private EditText to;
+    private EditText editTextSubject;
+    private EditText editTextMessage;
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mail_sending);
 
         Bundle b = getIntent().getExtras();
-        editJobName = b.getString("editJobName");
+        assert b != null;
+        String editJobName = b.getString("editJobName");
 
 
         to = findViewById(R.id.editTextto);
         editTextSubject = findViewById(R.id.editTextSubject);
         editTextMessage = findViewById(R.id.editTextMessage);
-        button = findViewById(R.id.button);
+        Button button = findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,21 +43,21 @@ public class MailSending extends AppCompatActivity {
                 finish();
             }
         });
-        ArrayList<String> data = new ArrayList<String>();
-        myDb = new DatabaseHelper(this);
+        ArrayList<String> data = new ArrayList<>();
+        DatabaseHelper myDb = new DatabaseHelper(this);
         SQLiteDatabase db = myDb.getWritableDatabase();
-        Cursor res = db.rawQuery("select * from jobs where name = \'"+ editJobName+"\'", null);
+        @SuppressLint("Recycle") Cursor res = db.rawQuery("select * from jobs where name = \'"+ editJobName +"\'", null);
         while (res.moveToNext()) {
-            if (res.getString(res.getColumnIndex("name")) != "") {
+            if (!res.getString(res.getColumnIndex("name")).equals("")) {
                 data.add("Görevin Adı: "+res.getString(res.getColumnIndex("name"))+ "\n");
             }
-            if (res.getString(res.getColumnIndex("description")) != "") {
+            if (!res.getString(res.getColumnIndex("description")).equals("")) {
                 data.add("Görevin Tanımı: "+res.getString(res.getColumnIndex("description"))+ "\n");
             }
-            if (res.getString(res.getColumnIndex("baslangic")) != "") {
+            if (!res.getString(res.getColumnIndex("baslangic")).equals("")) {
                 data.add("Görevin Başlangıç Tarihi: "+res.getString(res.getColumnIndex("baslangic"))+ "\n");
             }
-            if (res.getString(res.getColumnIndex("bitis")) != "") {
+            if (!res.getString(res.getColumnIndex("bitis")).equals("")) {
                 data.add("Görevin Bitiş Tarihi: "+res.getString(res.getColumnIndex("bitis"))+ "\n");
             }
         }
@@ -68,12 +65,11 @@ public class MailSending extends AppCompatActivity {
                 .replace("[", "")
                 .replace("]", "")
                 .replace(",", ""));
-        //String list = Arrays.toString(customers.toArray()).replace("[", "").replace("]", "");
         editTextSubject.setText(editJobName + " Görevi Size Delege Edilmiştir");
     }
 
 
-    public void sendMail(){
+    private void sendMail(){
 
         String recipientList=to.getText().toString();
         String [] recipients=recipientList.split(",");

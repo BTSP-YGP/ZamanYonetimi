@@ -1,7 +1,6 @@
 package com.example.zamanyonetimi;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,43 +11,35 @@ import android.app.Dialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
-
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 import java.util.Calendar;
 
 
+@SuppressLint("Registered")
 public class MainReminder extends AppCompatActivity {
-    Button setTime;
-    Button scheduleEvent;
-    TextView textView;
+    private TextView textView;
     static final int DATEPICKER_DIALOG_ID = 0;
     static final int TIMEPICKER_DIALOG_ID = 1;
     int Year, Month, Day, Hour, Minute;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_reminder);
+
         final Calendar calendar = Calendar.getInstance();
         Year = calendar.get(Calendar.YEAR);
         Month = calendar.get(Calendar.MONTH);
         Day = calendar.get(Calendar.DAY_OF_MONTH);
         Hour = calendar.get(Calendar.HOUR_OF_DAY);
         Minute = calendar.get(Calendar.MINUTE);
-        setTime =  findViewById(R.id.button1);
-        scheduleEvent = findViewById(R.id.button2);
+        Button setTime = findViewById(R.id.button1);
+        Button scheduleEvent = findViewById(R.id.button2);
         textView=findViewById(R.id.textView2);
-
-
-
 
         setTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,8 +68,6 @@ public class MainReminder extends AppCompatActivity {
 
                 assert alarmMgr != null;
                 alarmMgr.set(AlarmManager.RTC_WAKEUP, mills, pendingIntent);
-                //Toast.makeText(MainReminder.this, "Event scheduled at " + Hour + ":" + Minute + " " + Day + "/" + Month + "/" + Year, Toast.LENGTH_LONG).show();
-                //textView.setText(+Day +"/" +Month+"/ "+Year+"  "+Hour+ ":"  +Minute);
 
                 String dateBack = Day +"/" +Month+"/"+Year;
                 String timeBack = Hour+ ":" +Minute;
@@ -120,6 +109,7 @@ public class MainReminder extends AppCompatActivity {
 
     protected TimePickerDialog.OnTimeSetListener timePickerListener =
             new TimePickerDialog.OnTimeSetListener() {
+                @SuppressLint("SetTextI18n")
                 @Override
                 public void onTimeSet(TimePicker timePicker, int h, int min) {
                     Hour = h;

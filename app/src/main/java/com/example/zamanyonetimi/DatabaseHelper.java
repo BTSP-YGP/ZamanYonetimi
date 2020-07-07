@@ -2,7 +2,6 @@ package com.example.zamanyonetimi;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.text.Editable;
@@ -10,8 +9,8 @@ import android.text.Editable;
 import androidx.annotation.Nullable;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME= "zamanyonetimi.db";
-    public static final String JOBS_TABLE= "jobs";
+    private static final String DATABASE_NAME= "zamanyonetimi.db";
+    private static final String JOBS_TABLE= "jobs";
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
@@ -32,8 +31,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertJob (String job_name, String job_description, Editable baslangic, Editable bitis,
-                              Boolean important, Boolean urgent) {
+    boolean insertJob(String job_name, String job_description, Editable baslangic, Editable bitis,
+                      Boolean important, Boolean urgent) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("name", job_name);
@@ -53,8 +52,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return sonuc != -1;
     }
 
-    public boolean updateJob (Integer whereId, String job_name, String job_description, Editable baslangic,
-                              Editable bitis, Boolean important, Boolean urgent) {
+    boolean updateJob(Integer whereId, String job_name, String job_description, Editable baslangic,
+                      Editable bitis, Boolean important, Boolean urgent) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("name", job_name);
@@ -67,12 +66,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return sonuc != -1;
     }
 
-    public void tamamlaJob (String jobName, Integer durum) {
+    public void tamamlaJob(String jobName, Integer durum) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("UPDATE jobs SET complete = "+ durum.toString() +" WHERE name = \'"+ jobName+"\'");
     }
 
-    public boolean insertReminder (String jobName, String reminddate, String remindtime) {
+    boolean insertReminder(String jobName, String reminddate, String remindtime) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("name", jobName);
@@ -82,7 +81,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return sonuc != -1;
     }
 
-    public boolean updateReminder (String jobName, String reminddate, String remindtime) {
+    boolean updateReminder(String jobName, String reminddate, String remindtime) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("name", jobName);
@@ -90,13 +89,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("remindtime", remindtime);
         long sonuc = db.update("reminders", contentValues, "name = \'"+ jobName+"\'", null);
         return sonuc != -1;
-    }
-
-    public Cursor ViewData(){
-        SQLiteDatabase db=this.getReadableDatabase();
-        String query="Select * from "+JOBS_TABLE;
-        Cursor cursor=db.rawQuery(query,null);
-        return cursor;
-
     }
 }
