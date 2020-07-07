@@ -1,5 +1,5 @@
-# Zaman Yonetimi Uygulaması  <img src="https://static-s.aa-cdn.net/img/gp/20600007236287/lNdYO-V3oLSPOXRdNbOROX-3eBZhpLDRhP8laOiPtmkwaXrzQpFcLas8kAG6ieSaJlE=w300?v=1" width="10%">
-Bu proje **METU BTSP** kapsamında geliştirilmiştir. 
+# Zaman Yonetimi Uygulaması*  <img src="https://static-s.aa-cdn.net/img/gp/20600007236287/lNdYO-V3oLSPOXRdNbOROX-3eBZhpLDRhP8laOiPtmkwaXrzQpFcLas8kAG6ieSaJlE=w300?v=1" width="10%">
+*Bu proje **METU BTSP** kapsamında geliştirilmiştir. 
 
 ## Uygulama Tanımı
 Eisenhower tekniğine dayanan bu uygulama kullanıcılara kendileri için acil ve önemli olan işleri tanımlama şansı sunarak, bu konuda farkındalıklarını artıracaktır. Uygulama kullanıcıların zamanlarını etkin kullanmalarını, yapılacak işleri ertelememelerini sağlayarak streslerini azaltmayı ve aynı zamanda verimliliklerini artırmayı hedeflemektedir.
