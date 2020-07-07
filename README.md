@@ -5,8 +5,8 @@ Bu proje **METU BTSP** kapsamında geliştirilmiştir.
 Eisenhower tekniğine dayanan bu uygulama kullanıcılara kendileri için acil ve önemli olan işleri tanımlama şansı sunarak, bu konuda farkındalıklarını artıracaktır. Uygulama kullanıcıların zamanlarını etkin kullanmalarını, yapılacak işleri ertelememelerini sağlayarak streslerini azaltmayı ve aynı zamanda verimliliklerini artırmayı hedeflemektedir.
 
 ## Uygulama Geliştirme Platformu
-İşletim sistemi : Android
-Yazılım geliştirme platformu: Android Studio 4.0
+İşletim sistemi : Android /n
+Yazılım geliştirme platformu: Android Studio 4.0 /n
 Programlama Dili : Java
 Veritabanı sunucusu: SQLite 
 
@@ -23,8 +23,6 @@ Veritabanı sunucusu: SQLite
 
 ## Nasıl Çalıştırılacağı?
 Zaman yönetimi uygulamasının kodunu çalıştırmak için Android 4.0 ve üzeri işletim sistemine sahip olunması gerekmektedir.
-
-
 
 ## Geliştirenler: 
  - Arzu Yücekaya Bat
