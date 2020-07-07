@@ -5,9 +5,12 @@ Bu proje **METU BTSP** kapsamında geliştirilmiştir.
 Eisenhower tekniğine dayanan bu uygulama kullanıcılara kendileri için acil ve önemli olan işleri tanımlama şansı sunarak, bu konuda farkındalıklarını artıracaktır. Uygulama kullanıcıların zamanlarını etkin kullanmalarını, yapılacak işleri ertelememelerini sağlayarak streslerini azaltmayı ve aynı zamanda verimliliklerini artırmayı hedeflemektedir.
 
 ## Uygulama Geliştirme Platformu
-İşletim sistemi : Android /n
-Yazılım geliştirme platformu: Android Studio 4.0 /n
+İşletim sistemi : Android
+
+Yazılım geliştirme platformu: Android Studio 4.0
+
 Programlama Dili : Java
+
 Veritabanı sunucusu: SQLite 
 
 ## Uygulama Fonksiyonları
