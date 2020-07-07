@@ -1,8 +1,8 @@
 # Zaman Yonetimi Uygulaması*  <img src="https://static-s.aa-cdn.net/img/gp/20600007236287/lNdYO-V3oLSPOXRdNbOROX-3eBZhpLDRhP8laOiPtmkwaXrzQpFcLas8kAG6ieSaJlE=w300?v=1" width="10%">
-*Bu proje **METU BTSP** kapsamında geliştirilmiştir. 
+*Bu proje **METU BTSP** kapsamında geliştirilmiştir. Eğitim amaçlıdır, herhangi bir şekilde **satılamaz**.
 
 ## Uygulama Tanımı
-Eisenhower tekniğine dayanan bu uygulama kullanıcılara kendileri için acil ve önemli olan işleri tanımlama şansı sunarak, bu konuda farkındalıklarını artıracaktır. Uygulama kullanıcıların zamanlarını etkin kullanmalarını, yapılacak işleri ertelememelerini sağlayarak streslerini azaltmayı ve aynı zamanda verimliliklerini artırmayı hedeflemektedir.
+Eisenhower tekniğine dayanan bu uygulama kullanıcılara kendileri için acil ve önemli olan işleri tanımlama şansı sunarak, bu konuda farkındalıklarını artırmaktadır. Uygulama kullanıcıların zamanlarını etkin kullanmalarını, yapılacak işleri ertelememelerini sağlayarak streslerini azaltmayı ve aynı zamanda verimliliklerini artırmayı sağlamaktadır.
 
 ## Uygulama Geliştirme Platformu
 İşletim sistemi : Android
@@ -22,7 +22,6 @@ Veritabanı sunucusu: SQLite
  - Aciliyet ve önem eksenlerinde inboxta yer alan yapılacak işleri 4 bölümden oluşan matrikse atar. 
  - Yapılacak işleri kuadrantlar arasında tekrar atayabilir.
  - E-mail yolu ile ilgili işleri delege eder.
- - İş listesinde arama yapar.
 
 ## Nasıl Çalıştırılacağı?
 Zaman yönetimi uygulamasının kodunu çalıştırmak için Android 4.0 ve üzeri işletim sistemine sahip olunması gerekmektedir.
@@ -30,5 +29,5 @@ Zaman yönetimi uygulamasının kodunu çalıştırmak için Android 4.0 ve üze
 ## Geliştirenler: 
  - Arzu Yücekaya Bat
  - Fırat Temel
- - Zafer Türkmendağ
+ - Dr. Zafer Türkmendağ
 
